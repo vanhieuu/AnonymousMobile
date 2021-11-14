@@ -10,17 +10,17 @@ const SignUp = () => {
   return (
     <View style={{width: width, height: '100%', backgroundColor: Colors.white}}>
       <Image
-        assetGroup="illustrations"
+        assetGroup="signIn"
         style={{
           width: width,
           height: (width * 301) / 300,
         }}
       />
       <View flex bottom centerH>
-        <Text CreateAccountScreenTittle marginB-6>
+        <Text b28 marginB-6>
           Change starts here
         </Text>
-        <Text CreateAccountText marginB-49>
+        <Text b28 marginB-49>
           Save your progress to access your personal trainning program!
         </Text>
         {/* <TouchableOpacity style={{backgroundColor: Colors.primary}}>

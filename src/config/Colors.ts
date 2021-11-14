@@ -36,5 +36,8 @@ Colors.loadColors({
   violet10: '#7082E9',
   blue10: '#007AFF',
   green10: '#53BD33',
+  onBoard1:'#a6e4d0',
+  onBoard2:'#fdeb93',
+  onBoard3:'#e9bcbe'
 });
 export default Colors;
