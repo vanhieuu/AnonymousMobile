@@ -22,7 +22,7 @@ const onPressLogin = React.useCallback(() => {
     <TouchableOpacity
       style={styles.btnLogin}
       onPress={onPressLogin}>
-      <Text h16 white>
+      <Text h16>
         SignUp
       </Text>
     </TouchableOpacity>

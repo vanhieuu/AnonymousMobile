@@ -41,10 +41,10 @@ const PageOnboarding = ({assetName, title, des, onPress}: IPageOnboarding) => {
         style={{width: width, height: (width / 250) * 313}}
       />
       <View flex bottom centerH>
-        <Text h30 marginB-10>
+        {/* <Text h30 marginB>
           {title}
-        </Text>
-        <Text b17 color={Colors.dark10} marginB-36 center>
+        </Text> */}
+        <Text b17 color={Colors.dark10} marginB center>
           {des}
         </Text>
         <Button
@@ -117,13 +117,13 @@ const OnboardingScreen = () => {
             key={item.assetName}
             onPress={() => {
               if(index === 3) return;
-              refDots.current?.setIndexPageFocus(index + 1);;
               refScrollView.current?.scrollTo({
                 x: (index + 1) * width,
                 y: 0,
                 animated: true,
               });
-              navigate('SignIn') 
+              refDots.current?.setIndexPageFocus(index + 1);;
+              navigate('SignUp') 
             }}
           />
         ))}
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   dot: {
     borderRadius: 5,
     marginHorizontal: 5,
-    height: 10,
-    width: 10,
+    height: 5,
+    width: 5,
   },
 });

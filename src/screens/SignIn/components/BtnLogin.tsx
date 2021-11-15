@@ -21,9 +21,10 @@ const onPressLogin = React.useCallback(() => {
   return (
     <TouchableOpacity
       style={styles.btnLogin}
-      onPress={onPressLogin}>
-      <Text h16 white>
-        SignIn{' '}
+      onPress={onPressLogin}
+      >
+      <Text h16 >
+        SignIn
       </Text>
     </TouchableOpacity>
   );

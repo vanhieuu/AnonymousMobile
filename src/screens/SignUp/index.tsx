@@ -1,3 +1,4 @@
+import { NavigationProp, useNavigation } from '@react-navigation/core';
 import React from 'react';
 import {StyleSheet, Dimensions} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
@@ -5,11 +6,13 @@ import {View, Text, Image, Button} from 'react-native-ui-lib';
 
 import Colors from '../../config/Colors';
 import {FONTS} from '../../config/Typo';
+import { RootStackParamList } from '../../nav/RootStack';
 import BtnRegister from './component/BtnRegister';
 
 const width = Dimensions.get('window').width;
 
 const SignUp = () => {
+  const {navigate} = useNavigation<NavigationProp<RootStackParamList>>()
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -19,16 +22,7 @@ const SignUp = () => {
   // }
 
   return (
-    <View flex bg-onBoard2>
-      <View flex center>
-        <Image
-          assetGroup="signUp"
-          style={{
-            width: width,
-            height: (width * 301) / 300,
-          }}
-        />
-      </View>
+    <View flex bg-white>
       <View flex centerV>
         <View marginH-24 marginB-32>
           <Text b17 dark80 marginB-16>
@@ -64,28 +58,17 @@ const SignUp = () => {
           />
           <View height={1} bg-dark80 marginT-12 />
         </View>
-
-        {/* <Button
-          label="EMAIL"
-          color={Colors.primary}
-          marginB-24
-          onPress={() => {}}
-        />
-        <Button
-          label="FACEBOOK"
-          color="#576DFF"
-          marginB-24
-          onPress={() => {}}
-        />
-        <Button
-          label="Google"
-          color={Colors.white}
-          marginB-24
-          onPress={() => {}}
-        /> */}
       </View>
-      <View flex marginH-24>
-        <BtnRegister />
+      <View marginH-24 marginB-32>
+        {/* <BtnRegister />
+         */}
+         <Button
+         label="Register"
+         backgroundColor={Colors.onBoard1}
+         onPress={() =>{
+           navigate('SignIn')
+         }}
+         />
       </View>
     </View>
   );
