@@ -1,13 +1,13 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import RootStack from './src/nav/RootStack'
-
+import React from 'react';
+import RootStack from './src/nav/RootStack';
+import {Provider} from 'react-redux';
+import store from './src/redux/store';
 const App = () => {
   return (
-   <RootStack/>
-  )
-}
+    <Provider store={store}>
+      <RootStack />
+    </Provider>
+  );
+};
 
-export default App
-
-const styles = StyleSheet.create({})
+export default App;

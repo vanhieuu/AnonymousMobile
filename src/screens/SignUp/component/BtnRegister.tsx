@@ -12,7 +12,7 @@ interface Props {
   };
 }
 
-const BtnLogin = () => {
+const BtnSignUp = () => {
   const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
 //   const [loading, setLoading] = React.useState<boolean>(true);
 const onPressLogin = React.useCallback(() => {
@@ -23,13 +23,13 @@ const onPressLogin = React.useCallback(() => {
       style={styles.btnLogin}
       onPress={onPressLogin}>
       <Text h16 white>
-        SignIn{' '}
+        SignUp
       </Text>
     </TouchableOpacity>
   );
 };
 
-export default BtnLogin;
+export default BtnSignUp;
 
 const styles = StyleSheet.create({
   btnLogin: {

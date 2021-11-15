@@ -1,5 +1,5 @@
 import {Assets} from 'react-native-ui-lib';
-Assets.loadAssetsGroup('signIn',{
+Assets.loadAssetsGroup('signUp',{
     CreatAccount:require('../assets/CreateAccountImg.png')
   })
   Assets.loadAssetsGroup('onboarding', {

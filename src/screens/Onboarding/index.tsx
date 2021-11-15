@@ -38,7 +38,7 @@ const PageOnboarding = ({assetName, title, des, onPress}: IPageOnboarding) => {
       <Image
         assetGroup="onboarding"
         assetName={assetName}
-        style={{width: width, height: (width / 375) * 464}}
+        style={{width: width, height: (width / 250) * 313}}
       />
       <View flex bottom centerH>
         <Text h30 marginB-10>
@@ -78,7 +78,7 @@ const Dots = React.forwardRef<IRefDots>((props, ref) => {
       views.push(
         <View
           backgroundColor={
-            indexPageFocus === i ? Colors.onBoard3 : Colors.dark40
+            indexPageFocus === i ? Colors.primary : Colors.dark40
           }
           style={styles.dot}
           key={i}
@@ -97,6 +97,8 @@ const OnboardingScreen = () => {
   const onMomentumScrollEnd = React.useCallback(({nativeEvent}) => {
     const x = nativeEvent.contentOffset.x;
     let indexFocus = Math.round(x / width);
+    refDots.current?.setIndexPageFocus(indexFocus);
+
   }, []);
 
   return (
@@ -114,13 +116,14 @@ const OnboardingScreen = () => {
             des={item.des}
             key={item.assetName}
             onPress={() => {
-               return navigate('SignIn');
-              // refScrollView.current?.scrollTo({
-              //   x: (index + 1) * width,
-              //   y: 0,
-              //   animated: true,
-              // });
-              refDots.current?.setIndexPageFocus(index + 1);
+              if(index === 3) return;
+              refDots.current?.setIndexPageFocus(index + 1);;
+              refScrollView.current?.scrollTo({
+                x: (index + 1) * width,
+                y: 0,
+                animated: true,
+              });
+              navigate('SignIn') 
             }}
           />
         ))}
@@ -135,7 +138,7 @@ export default OnboardingScreen;
 const styles = StyleSheet.create({
   containerDots: {
     position: 'absolute',
-    top: (width / 375) * 464,
+    top: (width / 250) * 313,
     height: 10,
     alignSelf: 'center',
     flexDirection: 'row',
