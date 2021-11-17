@@ -2,7 +2,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/core';
 import React from 'react';
 import {ActivityIndicator, Alert, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Colors, Text, View} from 'react-native-ui-lib';
+import {Colors, Text} from 'react-native-ui-lib';
 import {useDispatch} from 'react-redux';
 import URL from '../../../config/Api';
 import {RootStackParamList} from '../../../nav/RootStack';
@@ -60,7 +60,7 @@ const BtnLogin = ({infoLogin}: Props) => {
       {!!loading ? (
         <ActivityIndicator color={Colors.white} />
       ) : (
-        <Text h16>SignIn</Text>
+        <Text h16 white>Login</Text>
       )}
     </TouchableOpacity>
   );
@@ -70,7 +70,7 @@ export default BtnLogin;
 
 const styles = StyleSheet.create({
   btnLogin: {
-    backgroundColor: Colors.onBoard1,
+    backgroundColor: Colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
     height: 48,

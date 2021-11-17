@@ -38,6 +38,7 @@ Colors.loadColors({
   green10: '#53BD33',
   onBoard1:'#a6e4d0',
   onBoard2:'#fdeb93',
-  onBoard3:'#e9bcbe'
+  onBoard3:'#e9bcbe',
+  bgApp:'#FB2626'
 });
 export default Colors;

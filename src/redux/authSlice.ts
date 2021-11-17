@@ -55,7 +55,7 @@ const initValue: IAuth = {
   },
   createdAt: '',
   accessToken: '',
-  success:false,
+  success:true,
   message:'',
   statusAuth: EStatusAuth.check,
 };
