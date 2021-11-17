@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-const Notification = () => {
+const Cart = () => {
     return (
         <View>
             <Text></Text>
@@ -9,6 +9,6 @@ const Notification = () => {
     )
 }
 
-export default Notification
+export default Cart
 
 const styles = StyleSheet.create({})

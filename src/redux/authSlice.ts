@@ -6,35 +6,29 @@ export enum EGender {
   female = 2,
 }
 
-export interface IUser {
-  created_at: string;
-  deleted_at: null;
-  email: string;
-  email_verified_at: null;
-  id: number;
-  name: string;
-  role_id: 3;
-  theme: string;
-  updated_at: string;
+export interface IAdress {
+  city: string;
+  district: string;
+  ward: string;
+  detail: string;
 }
-
-export interface ICustomer {
-  age: number;
-  created_at: string;
-  deleted_at: null;
-  gender: EGender;
-  height: string;
-  id: number;
-  img: string;
-  membership: number;
-  membership_expired: string;
-  name: string;
+export interface IUser {
+  userName: string;
+  email: string;
   phone: string;
-  total_paid: string;
-  updated_at: string;
+  photoURL: string;
+  displayName: string;
+  gender: EGender;
+  dob: string;
+  address: IAdress;
+}
+export interface IAuth {
   user: IUser;
-  user_id: number;
-  weight: string;
+  createdAt: string;
+  accessToken: string;
+  success:boolean;
+  message:string
+  statusAuth: EStatusAuth
 }
 
 export enum EStatusAuth {
@@ -42,50 +36,27 @@ export enum EStatusAuth {
   unauth = 2,
   auth = 3,
 }
-export interface IAuth {
-  customer: ICustomer;
-  message: string;
-  success: boolean;
-  token: string;
-  user_id: number;
-  user_role_id: number;
-  statusAuth: EStatusAuth;
-}
 
 const initValue: IAuth = {
-  customer: {
-    age: 0,
-    created_at: '',
-    deleted_at: null,
-    gender: 1,
-    height: '',
-    id: 0,
-    img: '',
-    membership: 1,
-    membership_expired: '',
-    name: '',
+  user: {
+    userName: '',
+    email: '',
     phone: '',
-    total_paid: '',
-    updated_at: '',
-    user: {
-      created_at: '',
-      deleted_at: null,
-      email: '',
-      email_verified_at: null,
-      id: -1,
-      name: '',
-      role_id: 3,
-      theme: '',
-      updated_at: '',
+    photoURL: '',
+    displayName: '',
+    gender: 1,
+    dob: '',
+    address: {
+      city: '',
+      district: '',
+      ward: '',
+      detail: '',
     },
-    user_id: -1,
-    weight: '',
   },
-  message: '',
-  success: false,
-  token: '',
-  user_id: -1,
-  user_role_id: -1,
+  createdAt: '',
+  accessToken: '',
+  success:false,
+  message:'',
   statusAuth: EStatusAuth.check,
 };
 
@@ -94,12 +65,10 @@ export const authSlice = createSlice({
   initialState: initValue,
   reducers: {
     onLogin: (state, action: PayloadAction<IAuth>) => {
-      state.customer = action.payload.customer;
+      state.user = action.payload.user;
       state.message = action.payload.message;
       state.success = action.payload.success;
-      state.token = action.payload.token;
-      state.user_id = action.payload.user_id;
-      state.user_role_id = action.payload.user_role_id;
+      state.accessToken = action.payload.accessToken;
       state.statusAuth = EStatusAuth.auth;
     },
     updateStatusAuth: (
@@ -115,7 +84,7 @@ export const {onLogin, updateStatusAuth} = authSlice.actions;
 
 export const saveAuthAsync = (auth: IAuth) => {
   try {
-    AsyncStorage.setItem('RN17Auth', JSON.stringify(auth));
+    AsyncStorage.setItem('VoucherHunterAuth', JSON.stringify(auth));
   } catch (e) {
     // saving error
   }
@@ -123,16 +92,15 @@ export const saveAuthAsync = (auth: IAuth) => {
 
 export const getAuthAsync = async () => {
   try {
-    const auth = await AsyncStorage.getItem('RN17Auth');
-    if(auth){
-      return JSON.parse(auth)
+    const auth = await AsyncStorage.getItem('VoucherHunterAuth');
+    if (auth) {
+      return JSON.parse(auth);
     }
-    return null
+    return null;
   } catch (e) {
     // error reading value
     return null;
   }
 };
-
 
 export default authSlice.reducer;

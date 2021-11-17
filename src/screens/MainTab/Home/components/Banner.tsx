@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, Dimensions} from 'react-native';
-import {color} from 'react-native-reanimated';
 import {Carousel, Colors, View, Image} from 'react-native-ui-lib';
 
 const widthScreen = Dimensions.get('window').width;

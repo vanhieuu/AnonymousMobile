@@ -1,19 +1,19 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {Assets, Colors, Image, Text, View, Button} from 'react-native-ui-lib';
+import {Assets, Colors, Image, View, Button} from 'react-native-ui-lib';
 import Home from '../screens/MainTab/Home';
 import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs/lib/typescript/src/types';
 import {Header} from '@react-navigation/elements';
 import {FONTS} from '../config/Typo';
 import News from '../screens/MainTab/News';
-import Notification from '../screens/MainTab/Notification';
+import Cart from '../screens/MainTab/Cart';
 import Profile from '../screens/MainTab/Profile';
 
 export type MainTabParamList = {
   Home: undefined;
   News: undefined;
-  Notification: undefined;
+  Cart: undefined;
   Profile: undefined;
 };
 const Tab = createBottomTabNavigator();
@@ -42,7 +42,7 @@ const MainTab = () => {
                 fontFamily: FONTS.Heavy,
               }}
               headerTitleAlign="left"
-              headerRight={({tintColor, pressColor, pressOpacity}) => {
+              headerRight={({tintColor}) => {
                 return (
                   <View row>
                     <Button
@@ -76,20 +76,22 @@ const MainTab = () => {
             <Image assetGroup="iconTab" assetName="ic_new" tintColor={color} />
           ),
           tabBarLabel: 'News',
+          headerShown: false
         }}
       />
       <Tab.Screen
-        name="Notification"
-        component={Notification}
+        name="Cart"
+        component={Cart}
         options={{
           tabBarIcon: ({color}) => (
             <Image
               assetGroup="iconTab"
-              assetName="ic_notifications"
+              assetName="ic_shop"
               tintColor={color}
             />
           ),
-          tabBarLabel: 'Notifications',
+          tabBarLabel: 'Shop',
+          headerShown: false
         }}
       />
       <Tab.Screen
@@ -104,6 +106,7 @@ const MainTab = () => {
             />
           ),
           tabBarLabel: 'Profile',
+          headerShown: false
         }}
       />
     </Tab.Navigator>
