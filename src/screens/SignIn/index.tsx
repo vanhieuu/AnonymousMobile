@@ -61,13 +61,7 @@ const SignIn = () => {
         </View>
       </View>
       <View  marginH-24 marginV-24>
-          <Button
-          label="Sign In"
-          backgroundColor={Colors.onBoard1}
-          onPress={() => {
-            navigate('MainTab')
-          }}
-          />
+          <BtnLogin infoLogin={infoLogin}/>
       </View>
     </View>
   );
