@@ -20,6 +20,7 @@
 		CDA2B7E9E1D94FF18AAE50EF /* Avenir-Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0DA4EF3651D845AD8AEFEFD8 /* Avenir-Heavy.ttf */; };
 		990AB6106E3F4E6392B662D8 /* Avenir-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85B2F2DD85BD44FFBDFADD71 /* Avenir-Medium.ttf */; };
 		18BDCEE1A7664A6B9839049E /* Avenir-Roman.otf in Resources */ = {isa = PBXBuildFile; fileRef = D578F0025434408B8C06075D /* Avenir-Roman.otf */; };
+		C650FC43116F4BA18ACBA705 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43B35A47682E4E57BF5DD674 /* Ionicons.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		0DA4EF3651D845AD8AEFEFD8 /* Avenir-Heavy.ttf */ = {isa = PBXFileReference; name = "Avenir-Heavy.ttf"; path = "../assets/fonts/Avenir-Heavy.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		85B2F2DD85BD44FFBDFADD71 /* Avenir-Medium.ttf */ = {isa = PBXFileReference; name = "Avenir-Medium.ttf"; path = "../assets/fonts/Avenir-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		D578F0025434408B8C06075D /* Avenir-Roman.otf */ = {isa = PBXFileReference; name = "Avenir-Roman.otf"; path = "../assets/fonts/Avenir-Roman.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		43B35A47682E4E57BF5DD674 /* Ionicons.ttf */ = {isa = PBXFileReference; name = "Ionicons.ttf"; path = "../node_modules/react-native-ionicons/fonts/Ionicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,7 @@
 				0DA4EF3651D845AD8AEFEFD8 /* Avenir-Heavy.ttf */,
 				85B2F2DD85BD44FFBDFADD71 /* Avenir-Medium.ttf */,
 				D578F0025434408B8C06075D /* Avenir-Roman.otf */,
+				43B35A47682E4E57BF5DD674 /* Ionicons.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				CDA2B7E9E1D94FF18AAE50EF /* Avenir-Heavy.ttf in Resources */,
 				990AB6106E3F4E6392B662D8 /* Avenir-Medium.ttf in Resources */,
 				18BDCEE1A7664A6B9839049E /* Avenir-Roman.otf in Resources */,
+				C650FC43116F4BA18ACBA705 /* Ionicons.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,7 +10,7 @@ import {IAuth, onLogin, saveAuthAsync} from '../../../redux/authSlice';
 
 interface Props {
   infoLogin: {
-    email: string;
+    username: string;
     password: string;
   };
 }
@@ -28,7 +28,7 @@ const BtnLogin = ({infoLogin}: Props) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email: infoLogin.email,
+        username: infoLogin.username,
         password: infoLogin.password,
       }),
     })
@@ -45,12 +45,13 @@ const BtnLogin = ({infoLogin}: Props) => {
         dispatch(onLogin(json));
         setLoading(false);
         saveAuthAsync(json);
-        navigate('Onboarding');
+        
         return;
       })
       .catch(error => {
         console.error(error);
       });
+      navigate('MainTab');
   }, [infoLogin]);
   return (
     <TouchableOpacity

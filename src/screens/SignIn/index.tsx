@@ -1,40 +1,40 @@
 import {NavigationProp, useNavigation} from '@react-navigation/core';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {TextInput} from 'react-native-gesture-handler';
-import {Button, Text, View, Colors} from 'react-native-ui-lib';
+import { Text, View, Colors} from 'react-native-ui-lib';
 import {FONTS} from '../../config/Typo';
 import {RootStackParamList} from '../../nav/RootStack';
 import BtnLogin from './components/BtnLogin';
+import {Input} from 'react-native-elements';
 const SignIn = () => {
   const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
   const [infoLogin, setInfoLogin] = React.useState({
-    // username:"VoucherAdmin",
-    email: 'vcadmin@gmail.com',
+    username: 'VoucherAdmin123',
     password: 'vanhieuu99',
   });
   return (
     <View flex bg-white>
       <Text h26 primary margin-24 marginB-16>
-        Connect email address
+        Đăng nhập để săn voucher ngay thôi !!!
       </Text>
-      <Text marginL-24 marginR-20 b16 >
+      <Text marginL-24 marginR-20 b16>
         It's recommended to connect your email {`\n`} address for us to better
         protect your {`\n`} information
       </Text>
       <View flex centerV>
         <View marginH-24 marginB-32>
           <Text b17 dark80 marginB>
-            Your Email
+            Your Username
           </Text>
-          <TextInput
-            placeholder="Enter Email"
+          <Input
+            placeholder="Enter Username"
+            leftIcon={{type: 'font-awesome', name: 'user'}}
             style={styles.textInput}
-            onChangeText={(email: string) => {
+            onChangeText={(username: string) => {
               setInfoLogin(prev => {
                 return {
                   ...prev,
-                  email,
+                  username,
                 };
               });
             }}
@@ -45,9 +45,10 @@ const SignIn = () => {
           <Text b17 dark80 marginB>
             Set Password
           </Text>
-          <TextInput
+          <Input
             placeholder="Enter password"
             secureTextEntry
+            leftIcon={{type: 'font-awesome', name: 'lock'}}
             style={styles.textInput}
             onChangeText={(password: string) =>
               setInfoLogin(prev => {

@@ -12,8 +12,9 @@ export type RootStackParamList = {
   Onboarding: undefined;
   SignIn: undefined;
   SignUp: undefined;
+  ForgetPassword:undefined,
   MainTab: undefined;
-
+  Home: undefined;
   DetailItems:{
     item:IProduct
   }
