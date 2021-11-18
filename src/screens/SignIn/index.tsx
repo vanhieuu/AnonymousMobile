@@ -72,7 +72,7 @@ const SignIn = () => {
         </View>
       </View>
       <View marginH-24 flex>
-        <BtnLogin infoLogin={infoLogin} />
+        <BtnLogin infoLogin={infoLogin}  />
       </View>
     </View>
   );

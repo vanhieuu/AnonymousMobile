@@ -45,13 +45,11 @@ const BtnLogin = ({infoLogin}: Props) => {
         dispatch(onLogin(json));
         setLoading(false);
         saveAuthAsync(json);
-        
-        return;
+        return navigate('MainTab');
       })
       .catch(error => {
         console.error(error);
       });
-      navigate('MainTab');
   }, [infoLogin]);
   return (
     <TouchableOpacity
@@ -61,7 +59,9 @@ const BtnLogin = ({infoLogin}: Props) => {
       {!!loading ? (
         <ActivityIndicator color={Colors.white} />
       ) : (
-        <Text h16 white>Login</Text>
+        <Text h16 white>
+          Login
+        </Text>
       )}
     </TouchableOpacity>
   );
