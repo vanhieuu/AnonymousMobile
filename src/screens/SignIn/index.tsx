@@ -5,7 +5,8 @@ import { Text, View, Colors} from 'react-native-ui-lib';
 import {FONTS} from '../../config/Typo';
 import {RootStackParamList} from '../../nav/RootStack';
 import BtnLogin from './components/BtnLogin';
-import {Input} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Input } from 'react-native-elements';
 const SignIn = () => {
   const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
   const [infoLogin, setInfoLogin] = React.useState({
@@ -17,10 +18,8 @@ const SignIn = () => {
       <Text h26 primary margin-24 marginB-16>
         Đăng nhập để săn voucher ngay thôi !!!
       </Text>
-      <Text marginL-24 marginR-20 b16>
-        It's recommended to connect your email {`\n`} address for us to better
-        protect your {`\n`} information
-      </Text>
+      <View marginL-24 marginR-20 marginV-35 />
+        
       <View flex centerV>
         <View marginH-24 marginB-32>
           <Text b17 dark80 marginB>
@@ -28,7 +27,13 @@ const SignIn = () => {
           </Text>
           <Input
             placeholder="Enter Username"
-            leftIcon={{type: 'font-awesome', name: 'user'}}
+            leftIcon={
+              <Icon
+                name='lock'
+                size={20}
+                color='black'
+              />
+            }
             style={styles.textInput}
             onChangeText={(username: string) => {
               setInfoLogin(prev => {
@@ -39,7 +44,6 @@ const SignIn = () => {
               });
             }}
           />
-          <View height={1} bg-dark80 marginT-12 />
         </View>
         <View marginH-24 marginB-32>
           <Text b17 dark80 marginB>
@@ -48,7 +52,13 @@ const SignIn = () => {
           <Input
             placeholder="Enter password"
             secureTextEntry
-            leftIcon={{type: 'font-awesome', name: 'lock'}}
+            leftIcon={
+              <Icon
+                name='user'
+                size={20}
+                color='black'
+              />
+            }
             style={styles.textInput}
             onChangeText={(password: string) =>
               setInfoLogin(prev => {
@@ -59,7 +69,6 @@ const SignIn = () => {
               })
             }
           />
-          <View height={1} bg-dark80 marginT-12 />
         </View>
       </View>
       <View marginH-24 flex>

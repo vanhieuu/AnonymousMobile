@@ -1,4 +1,5 @@
 package com.anonymous;
++ import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.bridge.JSIModulePackage; 
 import com.swmansion.reanimated.ReanimatedJSIModulePackage; 
 import android.app.Application;
@@ -27,6 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
+          , new VectorIconsPackage()
           return packages;
         }
 
