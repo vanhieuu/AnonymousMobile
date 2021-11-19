@@ -7,16 +7,18 @@ interface Props {
   username: string;
   isPassword: boolean;
   iconName: string;
+  value:string
 }
 
-const Inputs = ({username, isPassword, iconName}: Props) => {
+const Inputs = ({username, isPassword, iconName,value}: Props) => {
   const [isFocus, setIsFocus] = React.useState<boolean>(false);
   const onFocusChange = React.useCallback(() => {
     setIsFocus(true);
   }, [isFocus]);
-  const [infoLogin, setInfoLogin] = React.useState({
-    username: '',
-    password: '',
+
+  const [infoInput, setInfoInput] = React.useState({
+  
+    // email: 'vcadmin123@gmail.com',
   });
   return (
     <View
@@ -27,14 +29,15 @@ const Inputs = ({username, isPassword, iconName}: Props) => {
         inputContainerStyle={styles.inputContainer}
         inputStyle={styles.inputText}
         secureTextEntry={isPassword}
-        onChangeText={(value:string) =>{
-            setInfoLogin(prev =>{
-                return{
-                    ...prev,
-                    value
-                }
-            })
-        }}
+        onChangeText={(value:string) =>
+          setInfoInput(infoInput => {
+            console.log(infoInput);
+            return {
+              ...infoInput,
+              value
+            };
+          })
+        }
         leftIcon={
           <Icon
             name={iconName}
