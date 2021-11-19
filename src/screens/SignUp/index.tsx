@@ -1,76 +1,50 @@
-import { NavigationProp, useNavigation } from '@react-navigation/core';
+import {NavigationProp, useNavigation} from '@react-navigation/core';
 import React from 'react';
-import {StyleSheet, Dimensions} from 'react-native';
-import {TextInput} from 'react-native-gesture-handler';
+import {StyleSheet, Dimensions, ScrollView} from 'react-native';
 import {View, Text, Image, Button} from 'react-native-ui-lib';
 
 import Colors from '../../config/Colors';
 import {FONTS} from '../../config/Typo';
-import { RootStackParamList } from '../../nav/RootStack';
+import {RootStackParamList} from '../../nav/RootStack';
+import Inputs from '../SignIn/components/Inputs';
 import BtnRegister from './component/BtnRegister';
 
 const width = Dimensions.get('window').width;
 
 const SignUp = () => {
-  const {navigate} = useNavigation<NavigationProp<RootStackParamList>>()
-  const [name, setName] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [infoRegister,setInfoRegister] = React.useState({
+      username:'DevTest',
+      email:"devtest@gmail.com",
+      password:'vanhieuu99',
+      phone: '12345678',
+      confirmPassword:'vanhieuu99'
+  })
+  const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
 
   // const submitData = () =>{
   //   fetch()
   // }
 
   return (
-    <View flex bg-white>
-      <View flex centerV>
-        <View marginH-24 marginB-32>
-          <Text b17 dark80 marginB-16>
-            Your Name
-          </Text>
-          <TextInput
-            placeholder="Enter Name"
-            style={styles.textInput}
-            onChangeText={text => setName(text)}
-          />
-          <View height={1} bg-dark80 marginT-12 />
-        </View>
-        <View marginH-24 marginB-32>
-          <Text b17 dark80 marginB-16>
-            Your Email
-          </Text>
-          <TextInput
-            placeholder="Enter Email"
-            style={styles.textInput}
-            onChangeText={text => setEmail(text)}
-          />
-          <View height={1} bg-dark80 marginT-12 />
-        </View>
-        <View marginH-24 marginB-32>
-          <Text b17 dark80 marginB-16>
-            Your Password
-          </Text>
-          <TextInput
-            placeholder="Enter Password"
-            style={styles.textInput}
-            secureTextEntry
-            onChangeText={text => setPassword(text)}
-          />
-          <View height={1} bg-dark80 marginT-12 />
-        </View>
+    <ScrollView style={{backgroundColor: 'white'}}>
+      <View flex style={styles.container}>
+        <Image
+          assetGroup="signUp"
+          assetName="CreatAccount"
+          resizeMode="center"
+          style={styles.img}
+        />
+        <Text style={styles.txtTitle}>
+          Let's Get Started
+        </Text>
+        <Inputs username="Username" iconName="user" isPassword={false} />
+        <Inputs username="Email" iconName="envelope" isPassword={false} />
+        <Inputs username="Phone" iconName="phone" isPassword={false} />
+        <Inputs username="Password" iconName="lock" isPassword={true} />
+        <Inputs username="Confirm Password" iconName="lock" isPassword={true} />
+        <BtnRegister infoRegister={infoRegister}/>
       </View>
-      <View marginH-24 marginB-32>
-        {/* <BtnRegister />
-         */}
-         <Button
-         label="Register"
-         backgroundColor={Colors.onBoard1}
-         onPress={() =>{
-           navigate('SignIn')
-         }}
-         />
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -81,5 +55,17 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontFamily: FONTS.Book,
     color: Colors.primary,
+  },
+  container: {
+    alignItems: 'center',
+  },
+  img: {
+    width: 300,
+    height: 130,
+    marginVertical: 5,
+  },
+  txtTitle: {
+    fontSize: 40,
+    fontFamily: FONTS.Heavy,
   },
 });

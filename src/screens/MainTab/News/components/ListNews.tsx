@@ -7,13 +7,12 @@ import {
   Text,
   View,
 } from 'react-native';
-import RNGestureHandlerButton from 'react-native-gesture-handler/lib/typescript/components/GestureHandlerButton';
 import {useSelector} from 'react-redux';
 import URL from '../../../../config/Api';
-import {IResProduct} from '../../../../redux/authSlice';
+import {INewsData} from '../../../../redux/newSlice';
 import {RootState} from '../../../../redux/store';
-import {IProduct} from '../../../../types/IProduct';
-import ItemProduct from './ItemProduct';
+import {IResNews} from '../../../../types/IProduct';
+import ItemCard from './ItemCard';
 
 interface Props {
   ListHeaderComponent:
@@ -23,15 +22,13 @@ interface Props {
     | undefined;
 }
 
-const ListProduct = ({ListHeaderComponent}: Props) => {
-  const token = useSelector<RootState, string>(state => state.auth.accessToken);
-  
+const ListNews = ({ListHeaderComponent}: Props) => {
+  const [news, setNews] = React.useState<INewsData[]>([]);
   const [loading, setLoading] = React.useState(true);
-  const [product, setProduct] = React.useState<IProduct[]>([]);
-  React.useEffect(() => {
-    if (!token ) return;
+  const pageNumber = useSelector<RootState, number>(state => state.news.page);
 
-    fetch(URL.Products, {
+  React.useEffect(() => {
+    fetch(URL.News(pageNumber), {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -39,34 +36,34 @@ const ListProduct = ({ListHeaderComponent}: Props) => {
       },
     })
       .then(response => response.json())
-      .then((json: IResProduct) => {
+      .then((json: IResNews) => {
         const success = json.success;
+        // console.log(json);
         if (!success) {
           Alert.alert('Thông báo', json.message);
           setLoading(false);
           return;
         }
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-        setProduct(json.product);
+        setNews(json.data);
         setLoading(false);
+        console.log(json);
         return json;
-      })
-      .catch(error => {
-        console.error(error);
       });
   }, []);
+
   return (
     <FlatList
-      data={product}
+      data={news}
       renderItem={({item}) => {
-        return <ItemProduct item={item} />;
+        return <ItemCard item={item} />;
       }}
-      keyExtractor={(item, index) => item.id.toString()}
+      keyExtractor={(item, index) => item._id.toString()}
       ListHeaderComponent={ListHeaderComponent}
     />
   );
 };
 
-export default ListProduct;
+export default ListNews;
 
 const styles = StyleSheet.create({});

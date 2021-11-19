@@ -1,80 +1,51 @@
-import {NavigationProp, useNavigation} from '@react-navigation/core';
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import { Text, View, Colors} from 'react-native-ui-lib';
+import {ScrollView, StyleSheet} from 'react-native';
+import {Text, Colors, Image,View} from 'react-native-ui-lib';
 import {FONTS} from '../../config/Typo';
-import {RootStackParamList} from '../../nav/RootStack';
+
 import BtnLogin from './components/BtnLogin';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Input } from 'react-native-elements';
+import {Input} from 'react-native-elements';
+import Inputs from './components/Inputs';
+import Account from './components/Account';
+import { RootStackParamList } from '../../nav/RootStack';
+import { NavigationProp, useNavigation } from '@react-navigation/core';
 const SignIn = () => {
-  const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
+  const {navigate} = useNavigation<NavigationProp<RootStackParamList>>()
   const [infoLogin, setInfoLogin] = React.useState({
     username: 'VoucherAdmin123',
     password: 'vanhieuu99',
   });
   return (
-    <View flex bg-white>
-      <Text h26 primary margin-24 marginB-16>
-        Đăng nhập để săn voucher ngay thôi !!!
-      </Text>
-      <View marginL-24 marginR-20 marginV-35 />
-        
-      <View flex centerV>
-        <View marginH-24 marginB-32>
-          <Text b17 dark80 marginB>
-            Your Username
+    <ScrollView style={{backgroundColor: 'white'}}>
+      <View style={styles.container}>
+        <Image
+          assetGroup="signUp"
+          assetName="Login"
+          resizeMode="center"
+          style={styles.image}
+        />
+        <Text style={styles.textTitle}> Welcome Back</Text>
+        <Inputs username="username" iconName="user" isPassword={false} />
+        <Inputs username="password" iconName="lock" isPassword={true} />
+        <View style={{width: '90%'}}>
+          <Text b13 black style={{alignSelf: 'flex-end',color:Colors.blue}} onPress={() => navigate('ForgetPassword')}>
+            {' '}
+            Forgot your password?
           </Text>
-          <Input
-            placeholder="Enter Username"
-            leftIcon={
-              <Icon
-                name='lock'
-                size={20}
-                color='black'
-              />
-            }
-            style={styles.textInput}
-            onChangeText={(username: string) => {
-              setInfoLogin(prev => {
-                return {
-                  ...prev,
-                  username,
-                };
-              });
-            }}
-          />
         </View>
-        <View marginH-24 marginB-32>
-          <Text b17 dark80 marginB>
-            Set Password
-          </Text>
-          <Input
-            placeholder="Enter password"
-            secureTextEntry
-            leftIcon={
-              <Icon
-                name='user'
-                size={20}
-                color='black'
-              />
-            }
-            style={styles.textInput}
-            onChangeText={(password: string) =>
-              setInfoLogin(prev => {
-                return {
-                  ...prev,
-                  password,
-                };
-              })
-            }
-          />
-        </View>
+        <BtnLogin infoLogin={infoLogin} />
+        <Text b13 black>Or connect using </Text>
+          <View row>
+              <Account icon='facebook' color='#3b5c8f' title='Facebook'/>
+              <Account icon='google' color='#ec482f' title='Google'/>
+          </View>
+          <View row>
+            <Text b13 black center> Don't Have An Account</Text>
+            <Text b13 style={{color:Colors.primary}} centerH onPress={() =>{navigate('SignUp')}}>SignUp</Text>
+          </View>
       </View>
-      <View marginH-24 flex>
-        <BtnLogin infoLogin={infoLogin}  />
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -85,5 +56,20 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontFamily: FONTS.Book,
     color: Colors.dark30,
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    width: 300,
+    height: 130,
+    marginVertical: 5,
+    // backgroundColor:Colors.primary
+  },
+  textTitle: {
+    fontFamily: FONTS.Heavy,
+    fontSize: 40,
   },
 });

@@ -1,10 +1,12 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createSlice,  PayloadAction} from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { IProduct } from '../types/IProduct';
 
 export enum EGender {
   male = 1,
   female = 2,
 }
+
 
 export interface IAdress {
   city: string;
@@ -27,7 +29,8 @@ export interface IAuth {
   createdAt: string;
   accessToken: string;
   success:boolean;
-  message:string
+  message:string;
+  userId:number;
   statusAuth: EStatusAuth
 }
 
@@ -57,8 +60,15 @@ const initValue: IAuth = {
   accessToken: '',
   success:false,
   message:'',
+  userId:-1,
   statusAuth: EStatusAuth.check,
 };
+export interface IResProduct {
+  success: boolean;
+  message: string;
+  product: IProduct[];
+}
+
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -77,8 +87,11 @@ export const authSlice = createSlice({
     ) => {
       state.statusAuth = action.payload.statusAuth;
     },
-  },
-});
+   
+  }
+  
+})
+;
 
 export const {onLogin, updateStatusAuth} = authSlice.actions;
 

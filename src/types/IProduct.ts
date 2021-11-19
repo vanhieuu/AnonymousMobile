@@ -1,3 +1,4 @@
+import { INewsData } from "../redux/newSlice";
 
 export interface IShortItem {
     name:string,
@@ -5,38 +6,23 @@ export interface IShortItem {
     type:string,
 }
 
-export interface IProductItem {
-  id: number;
-  product_id: number;
-  item_id: number;
-  created_at: string;
-  updated_at: string;
-  category: string;
-  item: {
-    id: number;
-    name: string;
-    type: string;
-    img:string,
-    listedPrice: string;
-    discountPrice: string;
-    is_hot: boolean;
-    supplier: string;
-    created_at: string;
-    updated_at: string;
-    deleted_at: string | null;
-    
-  };
-}
-
 export interface IProduct {
-  id: number;
-  product_id: number;
+  _id: string;
   name: string;
+  listedPrice:number;
+  discountPrice:number;
+  is_hot:boolean;
+  listphotos:[];
   created_at: string;
   updated_at: string;
   deleted_at: string;
-  price: number;
-  type: string;
-  item:IShortItem[]
-  product_item:IProductItem[]
+  quantity:number;
+  tags: [];
+  description:[]
+
+}
+export interface IResNews {
+  success:boolean;
+  message:string;
+  data:INewsData[]
 }

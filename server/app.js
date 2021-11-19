@@ -1,10 +1,13 @@
-const express = require('express');
+const express = require("express");
 const app = express();
+const dotenv = require("dotenv");
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const { default: App } = require('../App');
-require('./Dev')
-
+dotenv.config();
+const PORT = process.env.PORT || 4000;
+const mongoose = require("mongoose");
+const cors = require("cors");
+const morgan = require('morgan')
+require('../src/screens/SignIn')
 
 app.use(bodyParser.json());
 
@@ -12,12 +15,16 @@ const Devs = mongoose.model("dev")
 
 
 
-const mongoUri = 'mongodb+srv://Anonymous:3E2r%24bjteLsbW%2A%40@anonymous.wq4br.mongodb.net/Production?retryWrites=true&w=majority'
-
-mongoose.connect(mongoUri,{
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+var mongoDB_atlas = `mongodb+srv://Anonymous:3E2r%24bjteLsbW%2A%40@anonymous.wq4br.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+mongoose.connect(mongoDB_atlas,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    },
+    function (err) {
+        if (err) throw err;
+        console.log('Successfully connected');
+    });
 
 mongoose.connection.on("connected",()=>{
     console.log('connected to mongo')
@@ -34,7 +41,7 @@ app.get('/',(req,res)=>{
     })
 })
 
-app.post('/send-data',(req,res)=>{
+app.post('/login',(req,res)=>{
     const dev = new Devs({
         name:req.body.name,
         email:req.body.email,
