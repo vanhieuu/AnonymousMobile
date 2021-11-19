@@ -18,7 +18,7 @@ const CartCard = ({title, subtitle, price}: Props) => {
       <View row center>
         <View style={styles.image}>
           <Image
-            source={require('../../../../assets/icon-shopee.png')}
+            source={require('../../../../assets/icon-shopee.jpg')}
             style={styles.image}
             resizeMode="center"
           />

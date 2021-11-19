@@ -1,7 +1,7 @@
 import {Assets} from 'react-native-ui-lib';
 Assets.loadAssetsGroup('signUp', {
   CreatAccount: require('../assets/CreateAccountImg.png'),
-  Login :require('../assets/Login.png')
+  Login :require('../assets/Login.jpg')
 });
 Assets.loadAssetsGroup('onboarding', {
   onboarding1: require('../assets/onboarding-img1.png'),

@@ -9,13 +9,11 @@ import MainTab from './MainTab';
 import {IProduct} from '../types/IProduct';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
-import {
-  EStatusAuth,
-} from '../redux/authSlice';
+import {EStatusAuth} from '../redux/authSlice';
 
 import DetailItems from '../screens/DetailItems';
 import ForgetPassword from '../screens/ResetPassword';
-import {  INewsData } from '../redux/newSlice';
+import {INewsData} from '../redux/newSlice';
 import DetailNews from '../screens/DetailNews';
 
 export type RootStackParamList = {
@@ -28,9 +26,9 @@ export type RootStackParamList = {
   DetailItems: {
     item: IProduct;
   };
-  DetailNews:{
-    item:INewsData
-  }
+  DetailNews: {
+    item: INewsData;
+  };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -39,13 +37,10 @@ const RootStack = () => {
   const statusAuth = useSelector<RootState, EStatusAuth>(
     state => state.auth.statusAuth,
   );
-  
 
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="SignIn">
-        {/* {statusAuth === EStatusAuth.unauth ? ( */}
-
         <Stack.Screen
           name="Onboarding"
           component={OnboardingScreen}
@@ -57,8 +52,6 @@ const RootStack = () => {
           options={{headerShown: false}}
         />
 
-        {/* ) : ( */}
-
         <Stack.Screen
           name="MainTab"
           component={MainTab}
@@ -69,12 +62,12 @@ const RootStack = () => {
           component={DetailItems}
           options={{headerShown: false}}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="SignUp"
           component={SignUp}
           options={{headerShown: false}}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="ForgetPassword"
           component={ForgetPassword}
           options={{headerShown: false}}
@@ -84,20 +77,6 @@ const RootStack = () => {
           component={DetailNews}
           options={{headerShown: false}}
         />
-        {/* <Stack.Screen
-            name="PlayExercise"
-            component={PlayExercise}
-            options={{
-              headerStyle: {
-                backgroundColor: Colors.dark10,
-              },
-              headerTintColor: '#FFF',
-              title: '',
-              headerBackTitleVisible: false,
-            }}
-          /> */}
-
-        {/* )} */}
       </Stack.Navigator>
     </NavigationContainer>
   );

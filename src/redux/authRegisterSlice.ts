@@ -1,5 +1,6 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { EGender, IAdress } from "./authSlice";
+import { EGender, EStatusAuth, IAdress } from "./authSlice";
 
 
 
@@ -12,21 +13,24 @@ export interface IDataRegister{
     displayName:string;
     gender:EGender;
     phone:string;
-    address:IAdress
+    address:IAdress;
+    photoUrl:string;
     
   }
-  export interface IRegister{
-    username: IDataRegister;
-    createdAt: string;
+  export interface IAuthRegister{
+    user: IDataRegister;
     accessToken: string;
+    statusAuth: EStatusAuth;
+    message: string;
   }
-  const initValue:IRegister = {
-        username: {
+  const initValue:IAuthRegister = {
+        user: {
             username:'',
             email:'',
             phone:"",
             displayName:"",
             gender:1,
+            photoUrl:"",
             address:{
                 city:'',
                 district:'',
@@ -34,20 +38,42 @@ export interface IDataRegister{
                 detail:""
             },
         },
-        createdAt:"",
-        accessToken:""
+        message:'',
+        accessToken:"",
+        statusAuth: EStatusAuth.check,
+        
   }
 
   export const authRegisterSlice = createSlice({
     name:"register",
     initialState: initValue,
     reducers:{
-      onRegister:(state,action:PayloadAction<IRegister>)=>{
-        state.username = action.payload.username;
+      onRegister:(state,action:PayloadAction<IAuthRegister>)=>{
+        state.user = action.payload.user;
         state.accessToken= action.payload.accessToken;
-        state.createdAt= action.payload.createdAt;
+        state.message= action.payload.message;
       }
     }
   })
+  export const saveAuthAsync = (auth: IAuthRegister) => {
+    try {
+      AsyncStorage.setItem('VoucherHunterAuth', JSON.stringify(auth));
+    } catch (e) {
+      // saving error
+    }
+  };
+  
+  export const getAuthAsync = async () => {
+    try {
+      const auth = await AsyncStorage.getItem('VoucherHunterAuth');
+      if (auth) {
+        return JSON.parse(auth);
+      }
+      return null;
+    } catch (e) {
+      // error reading value
+      return null;
+    }
+  };
   export const {onRegister} = authRegisterSlice.actions
   export default authRegisterSlice.reducer

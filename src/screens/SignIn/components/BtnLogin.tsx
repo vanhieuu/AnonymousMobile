@@ -1,10 +1,15 @@
-import { NavigationProp, useNavigation } from '@react-navigation/core';
+import {NavigationProp, useNavigation} from '@react-navigation/core';
 import React from 'react';
-import {ActivityIndicator, Alert, StyleSheet,TouchableOpacity} from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import {Colors, Text} from 'react-native-ui-lib';
 import {useDispatch} from 'react-redux';
 import URL from '../../../config/Api';
-import { RootStackParamList } from '../../../nav/RootStack';
+import {RootStackParamList} from '../../../nav/RootStack';
 
 import {IAuth, onLogin, saveAuthAsync} from '../../../redux/authSlice';
 
@@ -16,7 +21,7 @@ interface Props {
 }
 
 const BtnLogin = ({infoLogin}: Props) => {
-  const {navigate} = useNavigation<NavigationProp<RootStackParamList>>()
+  const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
   const dispatch = useDispatch();
   const [loading, setLoading] = React.useState<boolean>(false);
   const onPressLogin = React.useCallback(() => {
@@ -28,16 +33,16 @@ const BtnLogin = ({infoLogin}: Props) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email: infoLogin.username,
+        username: infoLogin.username,
         password: infoLogin.password,
       }),
     })
       .then(response => response.json())
-      .then(json => {
-        // const success = json.success;
+      .then((json: IAuth) => {
+        const accessToken = json.accessToken;
         //login fail
-        if (!infoLogin.password) {
-          Alert.alert( 'wrong information');
+        if (!accessToken) {
+          Alert.alert( 'wrong information',json.message);
           console.log('login fail');
           setLoading(false);
           return ;
@@ -45,7 +50,7 @@ const BtnLogin = ({infoLogin}: Props) => {
         //login Success
         dispatch(onLogin(json));
         setLoading(false);
-        console.log('Success');
+        console.log('Success',json);
         saveAuthAsync(json);
         navigate('MainTab');
       })
@@ -72,7 +77,7 @@ const styles = StyleSheet.create({
     height: 48,
     borderRadius: 10,
     width: '90%',
-    marginVertical:10,
-    borderWidth:0,
+    marginVertical: 10,
+    borderWidth: 0,
   },
 });

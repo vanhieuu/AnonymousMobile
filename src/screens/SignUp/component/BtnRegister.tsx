@@ -6,8 +6,8 @@ import {Colors, Text, View} from 'react-native-ui-lib';
 import { useDispatch } from 'react-redux';
 import URL from '../../../config/Api';
 import {RootStackParamList} from '../../../nav/RootStack';
-import { onRegister } from '../../../redux/authRegisterSlice';
-import { saveAuthAsync } from '../../../redux/authSlice';
+import { IAuthRegister, onRegister ,saveAuthAsync} from '../../../redux/authRegisterSlice';
+
 
 interface Props {
   infoRegister: {
@@ -35,28 +35,29 @@ const onPressRegister = React.useCallback(() => {
       password: infoRegister.password,
     }),
   })
-    .then(response => response.json())
-    .then(json => {
-      const success = json.success;
-      //login fail
-      if (!success) {
-        Alert.alert( 'wrong information',json.message);
-
+    .then(response => response.json() 
+    )
+    .then((json:IAuthRegister) => {
+      console.log(json)
+      const token = json.accessToken;
+      // Register fail
+      if (token) {
+        Alert.alert( 'Register fail',json.message);
         console.log(json)
         setLoading(false);
         return ;
       }
-      //login Success
+      //register Success
       dispatch(onRegister(json));
       setLoading(false);
-      console.log('Success',json);
+      console.log('Success',json.accessToken);
       saveAuthAsync(json);
-      // navigate('SignUp');
+      navigate('SignIn');
     })
     .catch(error => {
       console.error(error);
     });
-}, [infoRegister]);
+}, []);
   return (
     <TouchableOpacity
       style={styles.btnLogin}

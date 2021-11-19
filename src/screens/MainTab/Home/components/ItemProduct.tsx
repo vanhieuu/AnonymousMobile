@@ -1,32 +1,35 @@
 import {NavigationProp, useNavigation} from '@react-navigation/core';
 import React from 'react';
-import {Dimensions, StyleSheet, TouchableOpacity,Animated} from 'react-native';
+import {Dimensions, StyleSheet, TouchableOpacity, Animated} from 'react-native';
 import {View, Card, Text, Colors, Image} from 'react-native-ui-lib';
 import {RootStackParamList} from '../../../../nav/RootStack';
 import {IProduct} from '../../../../types/IProduct';
 
 const widthScreen = Dimensions.get('window').width;
 
-interface Props extends IProduct{
-  onPress:() =>void
+const dataImage = [
+  'https://cf.shopee.vn/file/ca82c986590191e1b6a3bee6365cbf08',
+  'https://cf.shopee.vn/file/ca82c986590191e1b6a3bee6365cbf08',
+  'https://cf.shopee.vn/file/ca82c986590191e1b6a3bee6365cbf08',
+];
+interface Props {
+  image: string;
+  onPress: () => void;
 }
 
-
-const ItemProduct = ({listphotos,onPress}:Props) => {
+const ItemProduct = ({image, onPress}: Props) => {
   return (
-          <View style={styles.container}>
-              <TouchableOpacity onPress={onPress}>
-                {listphotos.map((item,index) =>{
-                  return(
-                    <View>
-                      <Animated.Image
-                          source={item}
-                      />
-                    </View>
-                  )
-                })}
-              </TouchableOpacity>
-          </View>
+    <View style={styles.container}>
+      <TouchableOpacity onPress={onPress}>
+        {dataImage.map((image, index) => {
+          return (
+            <View>
+              <Animated.Image source={{uri:image}} />
+            </View>
+          );
+        })}
+      </TouchableOpacity>
+    </View>
   );
 };
 

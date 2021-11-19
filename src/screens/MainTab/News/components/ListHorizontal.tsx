@@ -8,13 +8,8 @@ import {
   UIManager,
 } from 'react-native';
 import {View, Text, Colors, Card} from 'react-native-ui-lib';
-import {useSelector} from 'react-redux';
-import URL, {
-  api_key,
-  articles_url,
-  category,
-  country_Code,
-} from '../../../../config/Api';
+
+import URL from '../../../../config/Api';
 import {INewsData} from '../../../../redux/newSlice';
 import {RootState} from '../../../../redux/store';
 import {IResNews} from '../../../../types/IProduct';
