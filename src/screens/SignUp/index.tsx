@@ -1,13 +1,25 @@
-import {NavigationProp, useNavigation} from '@react-navigation/core';
-import React from 'react';
-import {StyleSheet, Dimensions, ScrollView} from 'react-native';
+import {NavigationProp, RouteProp, useNavigation, useRoute} from '@react-navigation/core';
+import React, {useState, createRef} from 'react';
+import {
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
 import {Input} from 'react-native-elements';
 import {View, Text, Image, Button, Colors} from 'react-native-ui-lib';
 import {FONTS} from '../../config/Typo';
 import {RootStackParamList} from '../../nav/RootStack';
 import Inputs from '../SignIn/components/Inputs';
-import BtnRegister from './component/BtnRegister';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {
+  IAuthRegister,
+  onRegister,
+  saveAuthAsync,
+} from '../../redux/authRegisterSlice';
+import URL from '../../config/Api';
+import {useDispatch} from 'react-redux';
 const width = Dimensions.get('window').width;
 
 const SignUp = () => {
@@ -15,19 +27,96 @@ const SignUp = () => {
   const onFocusChange = React.useCallback(() => {
     setIsFocus(true);
   }, [isFocus]);
+  const dispatch = useDispatch();
+  const [username, setUserName] = useState('');
+  const [email, setUserEmail] = useState('');
+  const [password, setUserPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [errorText, setErrorText] = useState('');
+  const [isRegistrationSuccess, setIsRegistrationSuccess] = useState(false);
+  const emailInputRef = React.useRef();
+  const ageInputRef = React.useRef();
+  const passwordInputRef = React.useRef();
   const [infoRegister, setInfoRegister] = React.useState({
     username: '',
     email: '',
     password: '',
-    phone: '',
-    confirmPassword: '',
   });
   const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
-
+  const route = useRoute<RouteProp<RootStackParamList,'SignIn'>()
+  const navigation = useNavigation<RootStackParamList>();
   const onPress = React.useCallback(() => {
-    navigate('SignIn');
+    navigation.Home;
   }, []);
-
+  const handleSubmitButton = () => {
+    setErrorText('');
+    if (!username) {
+      Alert.alert('Please fill Name');
+      return;
+    }
+    if (!email) {
+      Alert.alert('Please fill Email');
+      return;
+    }
+    if (!password) {
+      Alert.alert('Please fill Password');
+      return;
+    }
+    setLoading(true);
+    var dataToSend = {
+      username: username,
+      email: email,
+      password: password,
+    };
+    var formBody = [];
+    formBody.push(dataToSend);
+    fetch(URL.Register, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(dataToSend),
+    })
+      .then(response => response.json())
+      .then((json: IAuthRegister) => {
+        console.log(json);
+        // Register fail
+        if (!json.accessToken) {
+          Alert.alert('Register fail', json.message);
+          console.log(json);
+          setLoading(false);
+          return;
+        }
+        //register Success
+        dispatch(onRegister(json));
+        setLoading(false);
+        setIsRegistrationSuccess(true);
+        console.log('Success', json.accessToken);
+        saveAuthAsync(json);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+  if (isRegistrationSuccess) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: '#307ecc',
+          justifyContent: 'center',
+        }}>
+        <Text style={styles.successTextStyle}>Registration Successful</Text>
+        <TouchableOpacity
+          style={styles.btnLogin}
+          activeOpacity={0.5}
+          onPress={onPress}>
+          <Text style={styles.btnLogin}>Login Now</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
   return (
     <ScrollView style={{backgroundColor: 'white'}}>
       <View flex style={styles.container}>
@@ -49,15 +138,8 @@ const SignUp = () => {
             inputContainerStyle={styles.inputContainer}
             inputStyle={styles.inputText}
             secureTextEntry={false}
-            onChangeText={(username: string) =>
-              setInfoRegister(infoRegister => {
-                console.log('');
-                return {
-                  ...infoRegister,
-                  username,
-                };
-              })
-            }
+            onChangeText={username => setUserName(username)}
+            onSubmitEditing={() => emailInputRef.current}
             leftIcon={
               <Icon
                 name="user"
@@ -78,12 +160,8 @@ const SignUp = () => {
             inputContainerStyle={styles.inputContainer}
             inputStyle={styles.inputText}
             secureTextEntry={false}
-            onChangeText={(email: string) => {
-              setInfoRegister(infoRegister => {
-                console.log(infoRegister);
-                return {...infoRegister, email};
-              });
-            }}
+            onChangeText={(email: string) => setUserEmail(email)}
+            onSubmitEditing={() => passwordInputRef.current}
             leftIcon={
               <Icon
                 name="envelope"
@@ -93,7 +171,7 @@ const SignUp = () => {
             }
           />
         </View>
-        <View
+        {/* <View
           style={[
             styles.containerInput,
             {borderColor: isFocus ? '#E9707D' : '#eee'},
@@ -118,14 +196,8 @@ const SignUp = () => {
               />
             }
           />
-        </View>
-        {/* <Inputs
-          username="Phone"
-          iconName="phone"
-          isPassword={false}
-          value={infoRegister.phone}
-        /> */}
-       <View
+        </View> */}
+        <View
           style={[
             styles.containerInput,
             {borderColor: isFocus ? '#E9707D' : '#eee'},
@@ -136,12 +208,7 @@ const SignUp = () => {
             inputContainerStyle={styles.inputContainer}
             inputStyle={styles.inputText}
             secureTextEntry={true}
-            onChangeText={(password: string) => {
-              setInfoRegister(infoRegister => {
-                console.log(infoRegister);
-                return {...infoRegister, password};
-              });
-            }}
+            onChangeText={(password: string) => setUserPassword(password)}
             leftIcon={
               <Icon
                 name="lock"
@@ -168,12 +235,13 @@ const SignUp = () => {
             inputContainerStyle={styles.inputContainer}
             inputStyle={styles.inputText}
             secureTextEntry={true}
-            onChangeText={(confirmPassword: string) => {
-              setInfoRegister(infoRegister => {
-                console.log(infoRegister);
-                return {...infoRegister, confirmPassword};
-              });
-            }}
+            // onChangeText={(confirmPassword: string) => {
+            //       if(confirmPassword !== password){
+            //         return Alert.alert('Password incorrect')
+            //       }else{
+            //         setUserPassword(confirmPassword)
+            //       }
+            // }}
             leftIcon={
               <Icon
                 name="lock"
@@ -183,7 +251,12 @@ const SignUp = () => {
             }
           />
         </View>
-        <BtnRegister infoRegister={infoRegister} />
+        <TouchableOpacity
+            style={styles.btnLogin}
+            activeOpacity={0.5}
+            onPress={handleSubmitButton}>
+            <Text h16>REGISTER</Text>
+          </TouchableOpacity>
         <View style={{justifyContent: 'space-between'}}>
           <Text center>Already have an account</Text>
           <Text b13 style={{color: Colors.primary}} centerH onPress={onPress}>
@@ -229,5 +302,18 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     borderBottomWidth: 0,
+  },
+  btnLogin: {
+    backgroundColor: Colors.Primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 48,
+    borderRadius: 99,
+  },
+  successTextStyle: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 18,
+    padding: 30,
   },
 });
