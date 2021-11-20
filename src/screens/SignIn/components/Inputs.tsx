@@ -17,8 +17,7 @@ const Inputs = ({username, isPassword, iconName,value}: Props) => {
   }, [isFocus]);
 
   const [infoInput, setInfoInput] = React.useState({
-  
-    // email: 'vcadmin123@gmail.com',
+
   });
   return (
     <View
@@ -29,11 +28,11 @@ const Inputs = ({username, isPassword, iconName,value}: Props) => {
         inputContainerStyle={styles.inputContainer}
         inputStyle={styles.inputText}
         secureTextEntry={isPassword}
-        onChangeText={(value:string) =>
-          setInfoInput(infoInput => {
+        onChangeText={() =>
+          setInfoInput(prev => {
             console.log(infoInput);
             return {
-              ...infoInput,
+              ...prev,
               value
             };
           })
