@@ -26,3 +26,8 @@ export interface IResNews {
   message:string;
   data:INewsData[]
 }
+export interface IResProduct{
+  success:boolean;
+  message: string;
+  data:IProduct[]
+}

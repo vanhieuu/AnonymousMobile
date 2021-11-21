@@ -6,28 +6,67 @@ import {RootStackParamList} from '../../../../nav/RootStack';
 import {IProduct} from '../../../../types/IProduct';
 
 const widthScreen = Dimensions.get('window').width;
+const ItemProduct = ({item}: {item: IProduct}) => {
+  const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
 
-const dataImage = [
-  'https://cf.shopee.vn/file/ca82c986590191e1b6a3bee6365cbf08',
-  'https://cf.shopee.vn/file/ca82c986590191e1b6a3bee6365cbf08',
-  'https://cf.shopee.vn/file/ca82c986590191e1b6a3bee6365cbf08',
-];
-interface Props {
-  image: string;
-  onPress: () => void;
-}
-
-const ItemProduct = ({image, onPress}: Props) => {
+  const onPressItem = React.useCallback(() => {
+    navigate('DetailItems', {
+      item,
+    });
+  }, []);
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={onPress}>
-        {dataImage.map((image, index) => {
-          return (
-            <View>
-              <Animated.Image source={{uri:image}} />
+    <View backgroundColor="#Fff">
+      <TouchableOpacity onPress={onPressItem}>
+        <Card style={styles.container} row>
+          <View style={styles.contentItem}>
+            <Image
+              style={{height: 150, width: 150}}
+              source={{uri: item.listphotos.shift()}}
+              resizeMode="contain"
+            />
+          </View>
+          <View>
+            <View row>
+              {item.is_hot === true ? (
+                <>
+                  <View
+                    backgroundColor={Colors.bgApp}
+                    br100
+                    marginT-10
+                    marginL-10
+                    paddingV-2
+                    paddingH-8>
+                    <Text h8 color={Colors.Pro}>
+                      Hot!!
+                    </Text>
+                  </View>
+                </>
+              ) : (
+                <>
+                  <View
+                    backgroundColor={Colors.dark60}
+                    br100
+                    marginT-10
+                    marginL-10
+                    paddingV-2
+                    paddingH-8>
+                    <Text h8 color={Colors.white}>
+                      {``}
+                    </Text>
+                  </View>
+                </>
+              )}
+              <View paddingL-16 paddingR-6 marginB-11>
+                <Text h16 marginT-10 numberOfLines={1} color={'#6f6f6f'}>
+                  {item.name}
+                </Text>
+                <Text b13 color={'#7e7d7d'}>
+                  {item.tags}
+                </Text>
+              </View>
             </View>
-          );
-        })}
+          </View>
+        </Card>
       </TouchableOpacity>
     </View>
   );

@@ -60,11 +60,7 @@ const initValue: IAuth = {
 
   statusAuth: EStatusAuth.check,
 };
-export interface IResProduct {
-  success: boolean;
-  message: string;
-  product: IProduct[];
-}
+
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -73,7 +69,6 @@ export const authSlice = createSlice({
     onLogin: (state, action: PayloadAction<IAuth>) => {
       state.user = action.payload.user;
       state.message = action.payload.message;
-
       state.accessToken = action.payload.accessToken;
       state.statusAuth = EStatusAuth.auth;
     },

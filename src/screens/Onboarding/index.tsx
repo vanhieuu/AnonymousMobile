@@ -48,13 +48,14 @@ const PageOnboarding = ({assetName, title, des, onPress}: IPageOnboarding) => {
           {des}
         </Text>
         <Button
-          label="CREATE ACCOUNT"
+          label="Login"
           marginB-30
-          color={Colors.onBoard1}
+          color={Colors.primary}
           backgroundColor={Colors.onBoard2}
           style={{width: width - 32}}
           onPress={onPress}
         />
+        
       </View>
     </View>
   );
@@ -122,13 +123,14 @@ const OnboardingScreen = () => {
                 y: 0,
                 animated: true,
               });
-              refDots.current?.setIndexPageFocus(index + 1);;
-              navigate('SignUp') 
+              refDots.current?.setIndexPageFocus(index + 1);
+              navigate('SignIn')
             }}
           />
         ))}
       </ScrollView>
       <Dots ref={refDots}/>
+     
     </View>
   );
 };

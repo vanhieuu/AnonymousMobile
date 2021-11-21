@@ -1,17 +1,11 @@
-import {NavigationProp, RouteProp, useNavigation, useRoute} from '@react-navigation/core';
-import React, {useState, createRef} from 'react';
-import {
-  StyleSheet,
-  Dimensions,
-  ScrollView,
-  Alert,
-  TouchableOpacity,
-} from 'react-native';
+import {NavigationProp, useNavigation} from '@react-navigation/core';
+import React, {useState} from 'react';
+import {StyleSheet, ScrollView, Alert, TouchableOpacity} from 'react-native';
 import {Input} from 'react-native-elements';
-import {View, Text, Image, Button, Colors} from 'react-native-ui-lib';
+import {View, Text, Image, Colors} from 'react-native-ui-lib';
 import {FONTS} from '../../config/Typo';
 import {RootStackParamList} from '../../nav/RootStack';
-import Inputs from '../SignIn/components/Inputs';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   IAuthRegister,
@@ -20,34 +14,27 @@ import {
 } from '../../redux/authRegisterSlice';
 import URL from '../../config/Api';
 import {useDispatch} from 'react-redux';
-const width = Dimensions.get('window').width;
 
 const SignUp = () => {
   const [isFocus, setIsFocus] = React.useState<boolean>(false);
   const onFocusChange = React.useCallback(() => {
     setIsFocus(true);
-  }, [isFocus]);
+  }, []);
   const dispatch = useDispatch();
   const [username, setUserName] = useState('');
   const [email, setUserEmail] = useState('');
   const [password, setUserPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errorText, setErrorText] = useState('');
   const [isRegistrationSuccess, setIsRegistrationSuccess] = useState(false);
+ 
   const emailInputRef = React.useRef();
-  const ageInputRef = React.useRef();
   const passwordInputRef = React.useRef();
-  const [infoRegister, setInfoRegister] = React.useState({
-    username: '',
-    email: '',
-    password: '',
-  });
-  const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
-  const route = useRoute<RouteProp<RootStackParamList,'SignIn'>()
-  const navigation = useNavigation<RootStackParamList>();
-  const onPress = React.useCallback(() => {
-    navigation.Home;
-  }, []);
+
+  const {navigate,goBack} = useNavigation<NavigationProp<RootStackParamList>>();
+ 
+
   const handleSubmitButton = () => {
     setErrorText('');
     if (!username) {
@@ -60,6 +47,10 @@ const SignUp = () => {
     }
     if (!password) {
       Alert.alert('Please fill Password');
+      return;
+    }
+    if (confirmPassword != password) {
+      Alert.alert('Password is incorrect');
       return;
     }
     setLoading(true);
@@ -111,14 +102,14 @@ const SignUp = () => {
         <TouchableOpacity
           style={styles.btnLogin}
           activeOpacity={0.5}
-          onPress={onPress}>
+          onPress={() => navigate('SignIn')}>
           <Text style={styles.btnLogin}>Login Now</Text>
         </TouchableOpacity>
       </View>
     );
   }
   return (
-    <ScrollView style={{backgroundColor: 'white'}}>
+    <ScrollView style={{backgroundColor: 'white',marginTop:50}}>
       <View flex style={styles.container}>
         <Image
           assetGroup="signUp"
@@ -145,6 +136,7 @@ const SignUp = () => {
                 name="user"
                 size={20}
                 color={isFocus ? '#E9707D' : 'grey'}
+                style={styles.icon}
               />
             }
           />
@@ -162,41 +154,18 @@ const SignUp = () => {
             secureTextEntry={false}
             onChangeText={(email: string) => setUserEmail(email)}
             onSubmitEditing={() => passwordInputRef.current}
+            blurOnSubmit={false}
             leftIcon={
               <Icon
                 name="envelope"
                 size={20}
                 color={isFocus ? '#E9707D' : 'grey'}
+                style={styles.icon}
               />
             }
           />
         </View>
-        {/* <View
-          style={[
-            styles.containerInput,
-            {borderColor: isFocus ? '#E9707D' : '#eee'},
-          ]}>
-          <Input
-            placeholder="Phone"
-            onFocus={onFocusChange}
-            inputContainerStyle={styles.inputContainer}
-            inputStyle={styles.inputText}
-            secureTextEntry={false}
-            onChangeText={(phone: string) => {
-              setInfoRegister(infoRegister => {
-                console.log(infoRegister);
-                return {...infoRegister, phone};
-              });
-            }}
-            leftIcon={
-              <Icon
-                name="phone"
-                size={20}
-                color={isFocus ? '#E9707D' : 'grey'}
-              />
-            }
-          />
-        </View> */}
+
         <View
           style={[
             styles.containerInput,
@@ -208,22 +177,18 @@ const SignUp = () => {
             inputContainerStyle={styles.inputContainer}
             inputStyle={styles.inputText}
             secureTextEntry={true}
-            onChangeText={(password: string) => setUserPassword(password)}
+            onChangeText={Password => setUserPassword(Password)}
             leftIcon={
               <Icon
                 name="lock"
                 size={20}
                 color={isFocus ? '#E9707D' : 'grey'}
+                style={styles.icon}
               />
             }
           />
         </View>
-        {/* <Inputs
-          username="Confirm Password"
-          iconName="lock"
-          isPassword={true}
-          value={infoRegister.password}
-        /> */}
+       
         <View
           style={[
             styles.containerInput,
@@ -235,31 +200,33 @@ const SignUp = () => {
             inputContainerStyle={styles.inputContainer}
             inputStyle={styles.inputText}
             secureTextEntry={true}
-            // onChangeText={(confirmPassword: string) => {
-            //       if(confirmPassword !== password){
-            //         return Alert.alert('Password incorrect')
-            //       }else{
-            //         setUserPassword(confirmPassword)
-            //       }
-            // }}
+            onChangeText={(confirmPassword: string) => {
+              setConfirmPassword(confirmPassword);
+            }}
             leftIcon={
               <Icon
                 name="lock"
                 size={20}
                 color={isFocus ? '#E9707D' : 'grey'}
+                style={styles.icon}
               />
             }
           />
         </View>
         <TouchableOpacity
-            style={styles.btnLogin}
-            activeOpacity={0.5}
-            onPress={handleSubmitButton}>
-            <Text h16>REGISTER</Text>
-          </TouchableOpacity>
+          style={styles.btnLogin}
+          activeOpacity={0.5}
+          onPress={handleSubmitButton}>
+          <Text h16>REGISTER</Text>
+        </TouchableOpacity>
         <View style={{justifyContent: 'space-between'}}>
           <Text center>Already have an account</Text>
-          <Text b13 style={{color: Colors.primary}} centerH onPress={onPress}>
+          <Text
+            b13
+            style={{color: Colors.primary}}
+            centerH
+            center
+            onPress={() => goBack()}>
             SignIn
           </Text>
         </View>
@@ -271,11 +238,6 @@ const SignUp = () => {
 export default SignUp;
 
 const styles = StyleSheet.create({
-  textInput: {
-    fontSize: 17,
-    fontFamily: FONTS.Book,
-    color: Colors.primary,
-  },
   container: {
     alignItems: 'center',
   },
@@ -284,13 +246,16 @@ const styles = StyleSheet.create({
     height: 130,
     marginVertical: 5,
   },
+  icon: {
+    marginLeft: 8,
+  },
   txtTitle: {
     fontSize: 40,
     fontFamily: FONTS.Heavy,
   },
   containerInput: {
     width: '90%',
-    height: 50,
+    height: 58,
     borderRadius: 100,
     marginVertical: 10,
     borderWidth: 3.5,
@@ -298,7 +263,8 @@ const styles = StyleSheet.create({
   inputText: {
     color: '#0779e4',
     fontWeight: 'bold',
-    marginLeft: 5,
+    marginLeft: 8,
+    marginVertical: 0,
   },
   inputContainer: {
     borderBottomWidth: 0,

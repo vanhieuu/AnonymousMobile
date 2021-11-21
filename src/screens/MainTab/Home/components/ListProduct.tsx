@@ -10,7 +10,8 @@ import {
 import RNGestureHandlerButton from 'react-native-gesture-handler/lib/typescript/components/GestureHandlerButton';
 import {useSelector} from 'react-redux';
 import URL from '../../../../config/Api';
-import {IResProduct} from '../../../../redux/authSlice';
+import { IResProduct } from '../../../../redux/authProductSlice';
+
 import {RootState} from '../../../../redux/store';
 import {IProduct} from '../../../../types/IProduct';
 import ItemProduct from './ItemProduct';
@@ -25,9 +26,9 @@ interface Props {
 
 const ListProduct = ({ListHeaderComponent}: Props) => {
   const token = useSelector<RootState, string>(state => state.auth.accessToken);
-  
+  const productID = useSelector<RootState, string>(state =>state.auth.accessToken)
   const [loading, setLoading] = React.useState(true);
-  const [product, setProduct] = React.useState<IProduct[]>([]);
+  const [product, setProduct] = React.useState<IProduct[]>();
   React.useEffect(() => {
     if (!token ) return;
 
@@ -40,12 +41,12 @@ const ListProduct = ({ListHeaderComponent}: Props) => {
     })
       .then(response => response.json())
       .then((json: IResProduct) => {
-        const success = json.success;
-        if (!success) {
-          Alert.alert('Thông báo', json.message);
-          setLoading(false);
-          return;
-        }
+        // const success = json.success;
+        // if (!success) {
+        //   Alert.alert('Thông báo', json.message);
+        //   setLoading(false);
+        //   return;
+        // }
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
         setProduct(json.product);
         setLoading(false);
@@ -61,7 +62,7 @@ const ListProduct = ({ListHeaderComponent}: Props) => {
       renderItem={({item}) => {
         return <ItemProduct item={item} />;
       }}
-      keyExtractor={(item, index) => item.id.toString()}
+      keyExtractor={(item, index) => item._id.toString()}
       ListHeaderComponent={ListHeaderComponent}
     />
   );

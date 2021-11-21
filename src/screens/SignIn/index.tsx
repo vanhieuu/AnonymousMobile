@@ -1,27 +1,74 @@
 import React from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import {Alert, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import {Text, Colors, Image, View} from 'react-native-ui-lib';
 import {FONTS} from '../../config/Typo';
 
-import BtnLogin from './components/BtnLogin';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Input} from 'react-native-elements';
-import Inputs from './components/Inputs';
 import Account from './components/Account';
 import {RootStackParamList} from '../../nav/RootStack';
 import {NavigationProp, useNavigation} from '@react-navigation/core';
+import {IAuth, onLogin, saveAuthAsync} from '../../redux/authSlice';
+import {useDispatch} from 'react-redux';
+import URL from '../../config/Api';
+
 const SignIn = () => {
   const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
   const [isFocus, setIsFocus] = React.useState<boolean>(false);
   const onFocusChange = React.useCallback(() => {
     setIsFocus(true);
   }, [isFocus]);
-  const [infoLogin, setInfoLogin] = React.useState({
-    username: 'VoucherAdmin123',
-    password: 'vanhieuu99',
-  });
+  const dispatch = useDispatch();
+  const [username, setUserName] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [errorText, setErrorText] = React.useState('');
+  const onPressLogin = () => {
+    setErrorText('');
+    if (!username) {
+      Alert.alert('Please fill name');
+      return;
+    }
+    if (!password) {
+      Alert.alert('Please fill Password');
+      return;
+    }
+    setLoading(true);
+    let dataToSend = {username: username, password: password};
+
+    fetch(URL.Login, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(dataToSend),
+    })
+      .then(response => response.json())
+      .then((json: IAuth) => {
+        const accessToken = json.accessToken;
+        //login fail
+        if (!accessToken) {
+          Alert.alert('wrong information', json.message);
+          console.log('login fail');
+          console.log(username);
+          setLoading(false);
+          return;
+        }
+        //login Success
+        dispatch(onLogin(json));
+        setLoading(false);
+        console.log('Success', json);
+        saveAuthAsync(json);
+        navigate('MainTab');
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
   return (
-    <ScrollView style={{backgroundColor: 'white'}}>
+    <ScrollView style={{backgroundColor: 'white',marginTop:50}} >
       <View style={styles.container}>
         <Image
           assetGroup="signUp"
@@ -41,22 +88,17 @@ const SignIn = () => {
             inputContainerStyle={styles.inputContainer}
             inputStyle={styles.inputText}
             secureTextEntry={false}
-            onChangeText={(username: string) => {
-              setInfoLogin(infoLogin => {
-                console.log(infoLogin)
-                return {...infoLogin, username};
-              });
-            }}
+            onChangeText={username => setUserName(username)}
             leftIcon={
               <Icon
                 name="user"
                 size={20}
                 color={isFocus ? '#E9707D' : 'grey'}
+                style={styles.icon}
               />
             }
           />
         </View>
-            {/* <Inputs username='UserName' isPassword={false} iconName='user' value={infoLogin.username}/> */}
         <View
           style={[
             styles.containerInput,
@@ -68,19 +110,13 @@ const SignIn = () => {
             inputContainerStyle={styles.inputContainer}
             inputStyle={styles.inputText}
             secureTextEntry
-            onChangeText={(password: string) =>
-              setInfoLogin(infoLogin => {
-                return {
-                  ...infoLogin,
-                  password,
-                };
-              })
-            }
+            onChangeText={password => setPassword(password)}
             leftIcon={
               <Icon
                 name="lock"
                 size={20}
                 color={isFocus ? '#E9707D' : 'grey'}
+                style={styles.icon}
               />
             }
           />
@@ -95,7 +131,15 @@ const SignIn = () => {
             Forgot your password?
           </Text>
         </View>
-        <BtnLogin infoLogin={infoLogin} />
+        {errorText != '' ? (
+          <Text style={styles.errorTextStyle}>{errorText}</Text>
+        ) : null}
+        <TouchableOpacity
+          style={styles.btnLogin}
+          activeOpacity={0.5}
+          onPress={onPressLogin}>
+          <Text h16>Login</Text>
+        </TouchableOpacity>
         <Text b13 black>
           Or connect using{' '}
         </Text>
@@ -126,11 +170,6 @@ const SignIn = () => {
 export default SignIn;
 
 const styles = StyleSheet.create({
-  textInput: {
-    fontSize: 17,
-    fontFamily: FONTS.Book,
-    color: Colors.dark30,
-  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -146,9 +185,14 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.Heavy,
     fontSize: 40,
   },
+  errorTextStyle: {
+    color: 'red',
+    textAlign: 'center',
+    fontSize: 14,
+  },
   containerInput: {
     width: '90%',
-    height: 50,
+    height: 58,
     borderRadius: 100,
     marginVertical: 10,
     borderWidth: 3.5,
@@ -156,9 +200,23 @@ const styles = StyleSheet.create({
   inputText: {
     color: '#0779e4',
     fontWeight: 'bold',
-    marginLeft: 5,
+    marginLeft: 8,
+    marginVertical: 0,
   },
   inputContainer: {
     borderBottomWidth: 0,
+  },
+  icon: {
+    marginLeft: 5,
+  },
+  btnLogin: {
+    backgroundColor: Colors.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 48,
+    borderRadius: 10,
+    width: '90%',
+    marginVertical: 10,
+    borderWidth: 0,
   },
 });
