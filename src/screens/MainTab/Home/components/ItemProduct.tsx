@@ -1,6 +1,6 @@
 import {NavigationProp, useNavigation} from '@react-navigation/core';
 import React from 'react';
-import {Dimensions, StyleSheet, TouchableOpacity, Animated} from 'react-native';
+import {Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
 import {View, Card, Text, Colors, Image} from 'react-native-ui-lib';
 import {RootStackParamList} from '../../../../nav/RootStack';
 import {IProduct} from '../../../../types/IProduct';

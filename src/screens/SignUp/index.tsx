@@ -5,7 +5,6 @@ import {Input} from 'react-native-elements';
 import {View, Text, Image, Colors} from 'react-native-ui-lib';
 import {FONTS} from '../../config/Typo';
 import {RootStackParamList} from '../../nav/RootStack';
-
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   IAuthRegister,

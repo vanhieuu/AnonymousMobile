@@ -2,8 +2,6 @@ import {NavigationProp, useNavigation} from '@react-navigation/core';
 import React from 'react';
 import {Dimensions, StyleSheet} from 'react-native';
 import {View, Text, Colors, Image, Button} from 'react-native-ui-lib';
-import Onboarding from 'react-native-onboarding-swiper';
-
 import {RootStackParamList} from '../../nav/RootStack';
 import {ScrollView} from 'react-native-gesture-handler';
 const width = Dimensions.get('window').width;

@@ -25,14 +25,12 @@ interface Props {
 }
 
 const ListProduct = ({ListHeaderComponent}: Props) => {
-  const token = useSelector<RootState, string>(state => state.auth.accessToken);
-  const productID = useSelector<RootState, string>(state =>state.auth.accessToken)
+  // const token = useSelector<RootState, string>(state => state.auth.accessToken);
+  const productID = useSelector<RootState, string>(state =>state.product.productId)
   const [loading, setLoading] = React.useState(true);
   const [product, setProduct] = React.useState<IProduct[]>();
   React.useEffect(() => {
-    if (!token ) return;
-
-    fetch(URL.Products, {
+    fetch(URL.item(productID), {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -40,7 +38,7 @@ const ListProduct = ({ListHeaderComponent}: Props) => {
       },
     })
       .then(response => response.json())
-      .then((json: IResProduct) => {
+      .then((json:IResProduct) => {
         // const success = json.success;
         // if (!success) {
         //   Alert.alert('Thông báo', json.message);
