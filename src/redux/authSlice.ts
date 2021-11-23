@@ -17,7 +17,7 @@ export interface IUser {
   userName: string;
   email: string;
   phone: string;
-  photoURL: string;
+  photoUrl: string;
   displayName: string;
   gender: EGender;
   dob: string;
@@ -42,7 +42,7 @@ const initValue: IAuth = {
     userName: '',
     email: '',
     phone: '',
-    photoURL: '',
+    photoUrl: '',
     displayName: '',
     gender: 1,
     dob: '',
@@ -63,7 +63,7 @@ const initValue: IAuth = {
 export interface IResUser {
   success:boolean,
   message:'',
-  profile:IUser[] 
+  user:IUser;
 }
 
 export const authSlice = createSlice({

@@ -76,62 +76,56 @@ const RootStack = () => {
   }, []);
 
   React.useEffect(() => {
-    checkLogin();
+    // checkLogin();
   }, []);
 
-  if (statusAuth === EStatusAuth.check) {
-    return (
-      <View flex center>
-        <ActivityIndicator color={Colors.primary} />
-      </View>
-    );
-  }
+  // if (statusAuth === EStatusAuth.check) {
+  //   return (
+  //     <View flex center>
+  //       <ActivityIndicator color={Colors.primary} />
+  //     </View>
+  //   );
+  // }
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="SignIn">
-        {statusAuth === EStatusAuth.unauth ? (
-          <>
-            <Stack.Screen
-              name="Onboarding"
-              component={OnboardingScreen}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="SignIn"
-              component={SignIn}
-              options={{headerShown: false}}
-            />
-          </>
-        ) : (
-          <>
-            <Stack.Screen
-              name="SignUp"
-              component={SignUp}
-              options={{headerShown: false}}
-            />
+        <Stack.Screen
+          name="Onboarding"
+          component={OnboardingScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="SignIn"
+          component={SignIn}
+          options={{headerShown: false}}
+        />
 
-            <Stack.Screen
-              name="MainTab"
-              component={MainTab}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="DetailItems"
-              component={DetailItems}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="ForgetPassword"
-              component={ForgetPassword}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="DetailNews"
-              component={DetailNews}
-              options={{headerShown: false}}
-            />
-          </>
-        )}
+        <Stack.Screen
+          name="SignUp"
+          component={SignUp}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="MainTab"
+          component={MainTab}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="DetailItems"
+          component={DetailItems}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="ForgetPassword"
+          component={ForgetPassword}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="DetailNews"
+          component={DetailNews}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

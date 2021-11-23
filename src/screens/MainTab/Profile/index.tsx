@@ -15,58 +15,42 @@ import {RootState} from '../../../redux/store';
 import {Colors, Text, View, Image} from 'react-native-ui-lib';
 import {Header} from 'react-native-elements';
 
-const Profile = ({item}: {item: IUser}) => {
+const Profile = () => {
   const statusAuth = useSelector<RootState, EStatusAuth>(
     state => state.auth.statusAuth,
   );
   const token = useSelector<RootState, string>(state => state.auth.accessToken);
+  const [user, setUsers] = React.useState<IUser>();
 
-  const dispatch = useDispatch();
-  const [profles, setProfiles] = React.useState<IUser[]>([]);
-  const checkLogin = React.useCallback(async () => {
-    const auth: IAuth | null = await getAuthAsync();
-    if (auth) {
-      fetch(URL.ValidateToken, {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then(response => response.json())
-        .then((json: IResUser) => {
-          const success = json.success;
-          if (!success) {
-            Alert.alert('Thông báo', json.message);
-            dispatch(updateStatusAuth({statusAuth: EStatusAuth.unauth}));
-            return;
-          }
-          dispatch(onLogin(auth));
-          setProfiles(json.profile);
-          return json;
-        });
-    } else {
-      dispatch(updateStatusAuth({statusAuth: EStatusAuth.unauth}));
-    }
-  }, []);
   React.useEffect(() => {
-    checkLogin();
-  });
-  if (statusAuth === EStatusAuth.check) {
-    return (
-      <View flex center>
-        <ActivityIndicator color={Colors.primary} />
-      </View>
-    );
-  }
+    fetch(URL.ValidateToken, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(response => response.json())
+      .then((json: IResUser) => {
+        console.log(json.message);
+        setUsers(json.user);
+        // console.log(user,'user');
+        // dispatch(users)
+        return;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
+
   return (
-    <View flex center>
+    <View backgroundColor={Colors.primary}>
       <Header
         placement="center"
         leftComponent={{icon: 'menu', color: Colors.bgApp}}
         centerComponent={{
-          text: 'Shopping',
+          text: 'VoucherHunter',
           style: {color: Colors.primary, fontSize: 20},
         }}
         rightComponent={{icon: 'search', color: Colors.bgApp}}
@@ -77,19 +61,16 @@ const Profile = ({item}: {item: IUser}) => {
         barStyle="light-content"
         statusBarProps={{barStyle: 'light-content'}}
       />
-      <View row center>
+      <View row marginH-12 marginV-20 backgroundColor={Colors.onBoard3} style={styles.container}>
         <View style={styles.img}>
           <Image
-            source={{uri: item.photoURL}}
-            resizeMode="center"
+            source={{uri: user?.photoUrl}}
+            resizeMode="contain"
             style={styles.img}
           />
         </View>
         <View>
-          <Text h24 black marginL-16>
-            {' '}
-            {item.displayName}
-          </Text>
+          <Text  h16 black marginV-12 marginH-5>{user?.email}</Text>
         </View>
       </View>
     </View>
@@ -100,7 +81,12 @@ export default Profile;
 
 const styles = StyleSheet.create({
   img: {
-    width: 30,
-    height: 30,
+    width: 100,
+    height: 100,
+    backgroundColor: 'red',
   },
+  container:{
+    justifyContent: 'space-between'
+
+  }
 });
