@@ -1,7 +1,7 @@
 const MainURL  = 'https://voucherhunter.herokuapp.com';
 const URL = {
     Login: MainURL + '/login',
-    ValidateToken :MainURL + `/validate`,
+    ValidateToken :MainURL + `/auth/profile`,
     User: MainURL +`/user`,
     Products: MainURL + `/product`,
     Register:MainURL +`/register`,

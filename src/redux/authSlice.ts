@@ -60,7 +60,11 @@ const initValue: IAuth = {
 
   statusAuth: EStatusAuth.check,
 };
-
+export interface IResUser {
+  success:boolean,
+  message:'',
+  profile:IUser[] 
+}
 
 export const authSlice = createSlice({
   name: 'auth',
