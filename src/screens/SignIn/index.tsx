@@ -50,15 +50,12 @@ const SignIn = () => {
         //login fail
         if (!accessToken) {
           Alert.alert('wrong information', json.message);
-          console.log('login fail');
-          console.log(username);
           setLoading(false);
           return;
         }
         //login Success
         dispatch(onLogin(json));
         setLoading(false);
-        console.log('Success', json);
         saveAuthAsync(json);
         navigate('MainTab');
       })

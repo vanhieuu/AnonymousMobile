@@ -65,13 +65,7 @@ const ListHorizontal = () => {
     })
       .then(response => response.json())
       .then((json: IResProduct) => {
-        // const success = json.success;
-        // if (!success) {
-        //   Alert.alert('Thông báo', json.message);
-        //   console.log(json.product)
-        //   setLoading(false);
-        //   return;
-        // }
+      
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
         setProducts(json.product);
         console.log(json.product);

@@ -27,12 +27,12 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [errorText, setErrorText] = useState('');
   const [isRegistrationSuccess, setIsRegistrationSuccess] = useState(false);
- 
+
   const emailInputRef = React.useRef();
   const passwordInputRef = React.useRef();
 
-  const {navigate,goBack} = useNavigation<NavigationProp<RootStackParamList>>();
- 
+  const {navigate, goBack} =
+    useNavigation<NavigationProp<RootStackParamList>>();
 
   const handleSubmitButton = () => {
     setErrorText('');
@@ -70,11 +70,9 @@ const SignUp = () => {
     })
       .then(response => response.json())
       .then((json: IAuthRegister) => {
-        console.log(json);
         // Register fail
         if (!json.accessToken) {
           Alert.alert('Register fail', json.message);
-          console.log(json);
           setLoading(false);
           return;
         }
@@ -82,7 +80,6 @@ const SignUp = () => {
         dispatch(onRegister(json));
         setLoading(false);
         setIsRegistrationSuccess(true);
-        console.log('Success', json.accessToken);
         saveAuthAsync(json);
       })
       .catch(error => {
@@ -101,14 +98,14 @@ const SignUp = () => {
         <TouchableOpacity
           style={styles.btnLogin}
           activeOpacity={0.5}
-          onPress={() => navigate('SignIn')}>
-          <Text style={styles.btnLogin}>Login Now</Text>
+          onPress={() => navigate('MainTab')}>
+          <Text style={styles.btnLogin}>Go Home</Text>
         </TouchableOpacity>
       </View>
     );
   }
   return (
-    <ScrollView style={{backgroundColor: 'white',marginTop:50}}>
+    <ScrollView style={{backgroundColor: 'white', marginTop: 50}}>
       <View flex style={styles.container}>
         <Image
           assetGroup="signUp"
@@ -187,7 +184,7 @@ const SignUp = () => {
             }
           />
         </View>
-       
+
         <View
           style={[
             styles.containerInput,
@@ -225,7 +222,7 @@ const SignUp = () => {
             style={{color: Colors.primary}}
             centerH
             center
-            onPress={() => goBack()}>
+            onPress={() => navigate('MainTab')}>
             SignIn
           </Text>
         </View>
