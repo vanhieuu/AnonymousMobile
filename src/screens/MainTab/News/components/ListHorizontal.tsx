@@ -46,13 +46,11 @@ const ListHorizontal = () => {
 
   const [pageNumber, setPageNumber] = React.useState(1);
   const refFlatlist = React.useRef<FlatList>(null);
-  
-  
-  const onEndReached = React.useCallback(()=>{
-    setPageNumber(pageNumber+1)
-  },[])
-  
-  
+
+  const onEndReached = React.useCallback(() => {
+    setPageNumber(pageNumber + 1);
+  }, []);
+
   React.useEffect(() => {
     fetch(URL.News(pageNumber), {
       method: 'GET',
