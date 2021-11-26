@@ -76,7 +76,8 @@ const MainTab = () => {
             <Image assetGroup="iconTab" assetName="ic_new" tintColor={color} />
           ),
           tabBarLabel: 'News',
-          headerShown: false
+          headerShown: false,
+          
         }}
       />
       <Tab.Screen
@@ -91,7 +92,8 @@ const MainTab = () => {
             />
           ),
           tabBarLabel: 'Shop',
-          headerShown: false
+          headerShown: false,
+          tabBarBadge: 1
         }}
       />
       <Tab.Screen

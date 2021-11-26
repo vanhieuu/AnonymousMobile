@@ -37,13 +37,8 @@ const ListNews = ({ListHeaderComponent}: Props) => {
     })
       .then(response => response.json())
       .then((json: IResNews) => {
-        const success = json.success;
+       
         // console.log(json);
-        if (!success) {
-          Alert.alert('Thông báo', json.message);
-          setLoading(false);
-          return;
-        }
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
         setNews(json.data);
         setLoading(false);

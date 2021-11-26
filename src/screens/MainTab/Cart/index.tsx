@@ -13,12 +13,10 @@ const Cart = () => {
     <SafeAreaView style={styles.container}>
       <Header
         placement="center"
-        leftComponent={{icon: 'menu', color: Colors.bgApp}}
         centerComponent={{
           text: 'Shopping',
           style: {color: Colors.primary, fontSize: 20},
         }}
-        rightComponent={{icon: 'search', color: Colors.bgApp}}
         containerStyle={{
           backgroundColor: 'white',
           justifyContent: 'space-around',
@@ -55,9 +53,8 @@ const Cart = () => {
             </Text>
           </View>
           <View flex marginH-24 marginV-20>
-          <Button label={'CheckOut'}/>
+            <Button label={'CheckOut'} />
           </View>
-          
         </View>
       </ScrollView>
     </SafeAreaView>

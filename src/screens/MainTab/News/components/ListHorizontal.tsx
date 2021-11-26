@@ -43,8 +43,16 @@ const ItemList = ({item}: {item: INewsData}) => {
 const ListHorizontal = () => {
   const [news, setNews] = React.useState<INewsData[]>();
   const [loading, setLoading] = React.useState(true);
-  // const pageNumber = useSelector<RootState, number>(state => state.news.page);
-  const [pageNumber,setPageNumber] = React.useState(1)
+
+  const [pageNumber, setPageNumber] = React.useState(1);
+  const refFlatlist = React.useRef<FlatList>(null);
+  
+  
+  const onEndReached = React.useCallback(()=>{
+    setPageNumber(pageNumber+1)
+  },[])
+  
+  
   React.useEffect(() => {
     fetch(URL.News(pageNumber), {
       method: 'GET',
@@ -95,19 +103,17 @@ const ListHorizontal = () => {
         <FlatList
           showsHorizontalScrollIndicator={true}
           data={news}
+          ref={refFlatlist}
+          decelerationRate="fast"
           contentContainerStyle={{paddingHorizontal: 16, paddingVertical: 12}}
           renderItem={({item}) => {
             return <ItemList item={item} />;
           }}
+          bounces={false}
+          onEndReached={onEndReached}
+          onEndReachedThreshold={0}
         />
-        
       )}
-      <View style={{alignSelf:'flex-end',marginRight:10}}>
-        <TouchableOpacity onPress={() =>{setPageNumber(pageNumber+1)}}>
-          <Text h16>Next Page</Text>
-        </TouchableOpacity>
-      </View>
-      
     </View>
   );
 };

@@ -17,6 +17,16 @@ export interface IDataRegister{
     photoUrl:string;
     
   }
+  export interface IUserRegister {
+    userName: string;
+    email: string;
+    phone: string;
+    photoUrl: string;
+    displayName: string;
+    gender: EGender;
+    dob: string;
+    address: IAdress;
+  }
   export interface IAuthRegister{
     user: IDataRegister;
     accessToken: string;
@@ -43,7 +53,11 @@ export interface IDataRegister{
         statusAuth: EStatusAuth.check,
         
   }
-
+  export interface IResUserRegister {
+    success:boolean,
+    message:'',
+    user:IUserRegister;
+  }
   export const authRegisterSlice = createSlice({
     name:"register",
     initialState: initValue,

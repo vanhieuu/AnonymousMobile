@@ -1,26 +1,20 @@
 import React from 'react';
-import {ActivityIndicator, Alert, StyleSheet} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {StyleSheet} from 'react-native';
+import {useSelector} from 'react-redux';
 import URL from '../../../config/Api';
-import {
-  EStatusAuth,
-  getAuthAsync,
-  IAuth,
-  IResUser,
-  IUser,
-  onLogin,
-  updateStatusAuth,
-} from '../../../redux/authSlice';
+import {IResUser, IUser} from '../../../redux/authSlice';
 import {RootState} from '../../../redux/store';
 import {Colors, Text, View, Image} from 'react-native-ui-lib';
 import {Header} from 'react-native-elements';
+import {
+  IResUserRegister,
+  IUserRegister,
+} from '../../../redux/authRegisterSlice';
 
 const Profile = () => {
-  const statusAuth = useSelector<RootState, EStatusAuth>(
-    state => state.auth.statusAuth,
-  );
   const token = useSelector<RootState, string>(state => state.auth.accessToken);
-  const [user, setUsers] = React.useState<IUser>();
+  const registerToken = useSelector<RootState, string>(state => state.register.accessToken)
+  const [user, setUsers] = React.useState<IUser | IUserRegister>();
 
   React.useEffect(() => {
     fetch(URL.ValidateToken, {
@@ -28,11 +22,11 @@ const Profile = () => {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token||registerToken}`,
       },
     })
       .then(response => response.json())
-      .then((json: IResUser) => {
+      .then((json: IResUser | IResUserRegister) => {
         console.log(json.message);
         setUsers(json.user);
         // console.log(user,'user');
@@ -61,7 +55,12 @@ const Profile = () => {
         barStyle="light-content"
         statusBarProps={{barStyle: 'light-content'}}
       />
-      <View row marginH-12 marginV-20 backgroundColor={Colors.onBoard3} style={styles.container}>
+      <View
+        row
+        marginH-12
+        marginV-20
+        backgroundColor={Colors.onBoard3}
+        style={styles.container}>
         <View style={styles.img}>
           <Image
             source={{uri: user?.photoUrl}}
@@ -70,7 +69,9 @@ const Profile = () => {
           />
         </View>
         <View>
-          <Text  h16 black marginV-12 marginH-5>{user?.email}</Text>
+          <Text h16 black marginV-12 marginH-5>
+            {user?.email}
+          </Text>
         </View>
       </View>
     </View>
@@ -85,8 +86,7 @@ const styles = StyleSheet.create({
     height: 100,
     backgroundColor: 'red',
   },
-  container:{
-    justifyContent: 'space-between'
-
-  }
+  container: {
+    justifyContent: 'space-between',
+  },
 });
