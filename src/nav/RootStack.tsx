@@ -36,6 +36,7 @@ export type RootStackParamList = {
   DetailNews: {
     item: INewsData;
   };
+  Search:undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

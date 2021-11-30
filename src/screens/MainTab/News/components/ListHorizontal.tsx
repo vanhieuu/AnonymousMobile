@@ -1,5 +1,7 @@
+import {NavigationProp, useNavigation} from '@react-navigation/core';
 import React from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   LayoutAnimation,
   Platform,
@@ -10,9 +12,11 @@ import {
 import {View, Text, Colors, Card} from 'react-native-ui-lib';
 
 import URL from '../../../../config/Api';
+import {RootStackParamList} from '../../../../nav/RootStack';
 import {INewsData} from '../../../../redux/newSlice';
 import {RootState} from '../../../../redux/store';
 import {IResNews} from '../../../../types/IProduct';
+import ItemCard from './ItemCard';
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -21,17 +25,22 @@ if (Platform.OS === 'android') {
 }
 
 const ItemList = ({item}: {item: INewsData}) => {
+  const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
+
+  const onPressNews = React.useCallback(() => {
+    navigate('DetailNews', {
+      item,
+    });
+  }, []);
+
   return (
-    <Card style={styles.containerItem} onPress={() => console.log('onPress')}>
+    <Card style={styles.containerItem} onPress={()=>console.log('Press Me')}>
       <View paddingL-16 paddingR-6 marginB-11>
-        <Text m15 marginT-10 numberOfLines={1} color={Colors.primary}>
-          {item.title}
-        </Text>
-        <Text b13 color={Colors.dark70}>
+        <Text b13 color={Colors.red}>
           {item.title}
         </Text>
       </View>
-      <View absT bg-white marginT-10 marginL-10 br100 paddingH-8 paddingV-2>
+      <View absT bg-white marginT-10 marginL-10 br100 paddingH-8 paddingV-2 backgroundColor={Colors.red}>
         <Text h8 color={'blue'}>
           {item.creator}
         </Text>
@@ -39,19 +48,24 @@ const ItemList = ({item}: {item: INewsData}) => {
     </Card>
   );
 };
+const RenderLoader = () => {
+  return (
+    <View>
+      <ActivityIndicator size="large" color={Colors.blue} />
+    </View>
+  );
+};
 
 const ListHorizontal = () => {
-  const [news, setNews] = React.useState<INewsData[]>();
-  const [loading, setLoading] = React.useState(true);
+  const [news, setNews] = React.useState<INewsData[]>([]);
+  const [loading, setLoading] = React.useState(false);
 
   const [pageNumber, setPageNumber] = React.useState(1);
-  const refFlatlist = React.useRef<FlatList>(null);
-
-  const onEndReached = React.useCallback(() => {
-    setPageNumber(pageNumber + 1);
-  }, []);
-
+  const onEndReached = React.useCallback(() =>{
+    setPageNumber(pageNumber+1)
+  },[pageNumber])
   React.useEffect(() => {
+    setLoading(true);
     fetch(URL.News(pageNumber), {
       method: 'GET',
       headers: {
@@ -60,9 +74,9 @@ const ListHorizontal = () => {
       },
     })
       .then(response => response.json())
-      .then((json: IResNews) => {
+      .then((json) => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-        setNews(json.data);
+        setNews( [...news,...json.data]);
         setLoading(false);
         // console.log(json.news);
         return json;
@@ -71,49 +85,28 @@ const ListHorizontal = () => {
         console.error(error);
       });
   }, [pageNumber]);
+
+
   return (
-    <View paddingV-20 backgroundColor={Colors.white}>
+    <View paddingV-20 backgroundColor={'#ffff'}>
       <View paddingH-16 centerV>
         <Text h26>News</Text>
       </View>
-      {loading ? (
-        <View paddingH-16 paddingV-12>
-          <Card
-            style={[
-              styles.containerItem,
-              {height: 251, backgroundColor: Colors.dark40},
-            ]}
-          />
-          <Card
-            style={[
-              styles.containerItem,
-              {height: 251, backgroundColor: Colors.dark40},
-            ]}
-          />
-          <Card
-            style={[
-              styles.containerItem,
-              {height: 251, backgroundColor: Colors.dark40},
-            ]}
-          />
-        </View>
-      ) : (
-        <FlatList
-          showsHorizontalScrollIndicator={true}
-          data={news}
-          ref={refFlatlist}
-          decelerationRate="fast"
-          contentContainerStyle={{paddingHorizontal: 16, paddingVertical: 12}}
-          renderItem={({item}) => {
-            return <ItemList item={item} />;
-          }}
-          bounces={false}
-          onEndReached={onEndReached}
-          onEndReachedThreshold={0}
-        />
-      )}
+      <FlatList
+        showsHorizontalScrollIndicator={true}
+        data={news}
+        renderItem={({item})=>{
+          return (
+            <ItemCard item={item}/>
+          )
+        }}
+        onEndReached={onEndReached}
+        onEndReachedThreshold={0}
+        keyExtractor={(item,index) => index.toString()}
+        ListFooterComponent={RenderLoader}
+      />
     </View>
-  );
+  ); 
 };
 
 export default ListHorizontal;
@@ -122,7 +115,7 @@ const styles = StyleSheet.create({
   containerItem: {
     width: '100%',
     marginRight: 12,
-    backgroundColor: 'white',
+    backgroundColor: 'blue',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -132,5 +125,10 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
     elevation: 2,
     marginBottom: 12,
+    
+  },
+  loaderStyle: {
+    marginVertical: 16,
+    alignItems: 'center',
   },
 });

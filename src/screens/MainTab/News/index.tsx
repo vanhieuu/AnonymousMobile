@@ -1,23 +1,19 @@
-import React from 'react';
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import React from 'react'
+import { Platform, StyleSheet, Text, UIManager, View } from 'react-native'
 import ListHorizontal from './components/ListHorizontal';
-import ListNews from './components/ListNews';
 
-const News = () => {
+
+if (Platform.OS === 'android') {
+  if (UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
+}
+const News = () => { 
   return (
-    <SafeAreaView>
-      <ListNews
-        ListHeaderComponent={
-          <>
-            <ListHorizontal />
-          </>
-        }
-      />
-      
-    </SafeAreaView>
-  );
-};
+    <ListHorizontal/>
+  )
+}
 
-export default News;
+export default News
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({})

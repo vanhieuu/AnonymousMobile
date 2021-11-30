@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {Colors, Card, Text, View} from 'react-native-ui-lib';
 import URL from '../../../../config/Api';
-import { IResProduct } from '../../../../redux/authProductSlice';
+import {IResProduct} from '../../../../redux/authProductSlice';
 
 import {IProduct} from '../../../../types/IProduct';
 
@@ -22,32 +22,19 @@ const ItemList = ({item}: {item: IProduct}) => {
   return (
     <Card style={styles.containerItem} onPress={() => console.log('PressItem')}>
       <Card.Section
-        imageSource={{uri: item.listphotos.shift()}}
+        imageSource={{
+          uri: item.listphotos.find(element => element !== undefined),
+        }}
         imageStyle={{height: 190, width: 190}}
       />
-      {item.is_hot === true ? (
-        <>
-          <View paddingL-16 paddingR-6 marginB-11>
-            <Text m15 marginT-10 numberOfLines={1}>
-              {item.name}
-            </Text>
-            <Text b13 color={Colors.Pro}>
-              Price:{item.listedPrice} vnđ
-            </Text>
-          </View>
-        </>
-      ) : (
-        <>
-          <View paddingL-16 paddingR-6 marginB-11>
-            <Text m15 marginT-10 numberOfLines={1}>
-              {item.name}
-            </Text>
-            <Text b13 color={Colors.Pro}>
-              Price:{item.listedPrice} vnđ
-            </Text>
-          </View>
-        </>
-      )}
+      <View paddingL-16 paddingR-6 marginB-11>
+        <Text m15 marginT-10 numberOfLines={1}>
+          {item.name}
+        </Text>
+        <Text b13 color={Colors.Pro}>
+          Price:{item.listedPrice} vnđ
+        </Text>
+      </View>
     </Card>
   );
 };
@@ -64,11 +51,9 @@ const ListHorizontal = () => {
       },
     })
       .then(response => response.json())
-      .then((json: IResProduct) => {
-      
+      .then(json => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-        setProducts(json.product);
-        console.log(json.product);
+        setProducts(json);
         setLoading(false);
         return json;
       })
@@ -76,6 +61,7 @@ const ListHorizontal = () => {
         console.error(err);
       });
   }, []);
+
   return (
     <View paddingV-12 backgroundColor="#fff">
       <View row spread paddingH-16 centerV>
@@ -110,8 +96,8 @@ const ListHorizontal = () => {
           horizontal
           showsHorizontalScrollIndicator={true}
           data={products}
-          keyExtractor={item => item.tags.toString()}
-          contentContainerStyle={{paddingHorizontal: 16, paddingVertical: 12}}
+          keyExtractor={item => item.name.toString()}
+          contentContainerStyle={{paddingHorizontal: 30, paddingVertical: 30}}
           renderItem={({item}) => {
             return <ItemList item={item} />;
           }}

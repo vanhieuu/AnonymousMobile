@@ -8,7 +8,8 @@ import {IProduct} from '../../../../types/IProduct';
 const widthScreen = Dimensions.get('window').width;
 const ItemProduct = ({item}: {item: IProduct}) => {
   const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
-
+  // let firstItem = item.listphotos.find(element=>element!==undefined);
+  
   const onPressItem = React.useCallback(() => {
     navigate('DetailItems', {
       item,
@@ -20,48 +21,20 @@ const ItemProduct = ({item}: {item: IProduct}) => {
         <Card style={styles.container} row>
           <View style={styles.contentItem}>
             <Image
-              style={{height: 150, width: 150}}
-              source={{uri: item.listphotos.shift()}}
+              style={{height: 100, width: 100}}
+              source={{uri:item.listphotos.find(element=>element!==undefined)}}
               resizeMode="contain"
             />
           </View>
+
           <View>
             <View row>
-              {item.is_hot === true ? (
-                <>
-                  <View
-                    backgroundColor={Colors.bgApp}
-                    br100
-                    marginT-10
-                    marginL-10
-                    paddingV-2
-                    paddingH-8>
-                    <Text h8 color={Colors.Pro}>
-                      Hot!!
-                    </Text>
-                  </View>
-                </>
-              ) : (
-                <>
-                  <View
-                    backgroundColor={Colors.dark60}
-                    br100
-                    marginT-10
-                    marginL-10
-                    paddingV-2
-                    paddingH-8>
-                    <Text h8 color={Colors.white}>
-                      {``}
-                    </Text>
-                  </View>
-                </>
-              )}
-              <View paddingL-16 paddingR-6 marginB-11>
-                <Text h16 marginT-10 numberOfLines={1} color={'#6f6f6f'}>
+              <View marginB-11 marginH-60>
+                <Text h24 marginT-10 numberOfLines={1} color={'#6f6f6f'}>
                   {item.name}
                 </Text>
                 <Text b13 color={'#7e7d7d'}>
-                  {item.tags}
+                  {item.listedPrice}
                 </Text>
               </View>
             </View>
@@ -77,7 +50,7 @@ export default ItemProduct;
 const styles = StyleSheet.create({
   container: {
     width: widthScreen - 32,
-    backgroundColor: Colors.blue80,
+    backgroundColor: '#ffcdd2',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -93,9 +66,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderTopLeftRadius: 12,
     borderBottomLeftRadius: 12,
-    backgroundColor: 'red',
-    height: 150,
-    width: 150,
+    height: 100,
+    width: 100,
   },
   imgStyle: {
     height: 150,

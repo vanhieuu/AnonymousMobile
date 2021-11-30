@@ -12,32 +12,33 @@ const ItemCard = ({item}: {item: INewsData}) => {
       item,
     });
   }, []);
+
   return (
-    <View backgroundColor="#fff">
+    <View backgroundColor="#ffcdd2">
       <TouchableOpacity onPress={onPressItem}>
         <Card style={styles.container} row>
           <View style={styles.contentItem}>
-            <Text h24 black>
-              {item.title}
+            <Text h10 black marginT-10 marginL-10 paddingV-2 paddingH-8>
+              {item.creator}
             </Text>
             <Text>{item.created_at}</Text>
           </View>
           <View>
             <View row>
               <View
-                backgroundColor={'#F7B500'}
+                backgroundColor={'red'}
                 br100
                 marginT-10
                 marginL-10
                 paddingV-2
                 paddingH-8>
                 <Text h8 color={Colors.white}>
-                  {item.creator}
+                  {item.title}
                 </Text>
               </View>
             </View>
-            <View paddingL-16 paddingR-6 marginB-11>
-              <Text h16 marginT-10 numberOfLines={1} color={'#6f6f6f'}>
+            <View paddingL-16 paddingR-6 marginB-15>
+              <Text h16 marginT-10 numberOfLines={2} color={'#6f6f6f'}>
                 {item.content}
               </Text>
             </View>
@@ -53,24 +54,24 @@ export default ItemCard;
 const styles = StyleSheet.create({
   container: {
     width: widthScreen - 32,
-    backgroundColor: Colors.blue80,
-    shadowColor: '#000',
+    backgroundColor: '#ffff',
+    shadowColor: 'red',
     shadowOffset: {
       width: 0,
       height: 1,
     },
     shadowOpacity: 0.2,
-    shadowRadius: 1.41,
+    shadowRadius: 2,
     elevation: 2,
     alignSelf: 'center',
-    marginBottom: 12,
+    marginBottom: 10,
   },
   contentItem: {
     overflow: 'hidden',
-    borderTopLeftRadius: 12,
-    borderBottomLeftRadius: 12,
-    backgroundColor: 'red',
-    height: 150,
-    width: 150,
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 8,
+    backgroundColor: 'white',
+    height: 30,
+    width: 70,
   },
 });

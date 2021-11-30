@@ -38,15 +38,9 @@ const ListProduct = ({ListHeaderComponent}: Props) => {
       },
     })
       .then(response => response.json())
-      .then((json:IResProduct) => {
-        // const success = json.success;
-        // if (!success) {
-        //   Alert.alert('Thông báo', json.message);
-        //   setLoading(false);
-        //   return;
-        // }
+      .then((json) => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-        setProduct(json.product);
+        setProduct(json);
         setLoading(false);
         return json;
       })
