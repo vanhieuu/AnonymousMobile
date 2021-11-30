@@ -9,6 +9,8 @@ import {FONTS} from '../config/Typo';
 import News from '../screens/MainTab/News';
 import Cart from '../screens/MainTab/Cart';
 import Profile from '../screens/MainTab/Profile';
+import { NavigationProp, useNavigation } from '@react-navigation/core';
+import { RootStackParamList } from './RootStack';
 
 export type MainTabParamList = {
   Home: undefined;
@@ -19,6 +21,7 @@ export type MainTabParamList = {
 const Tab = createBottomTabNavigator();
 
 const MainTab = () => {
+  const {navigate} = useNavigation<NavigationProp<RootStackParamList>>()
   return (
     <Tab.Navigator
       screenOptions={{
@@ -36,7 +39,7 @@ const MainTab = () => {
           headerTransparent: true,
           header: (props: BottomTabHeaderProps) => (
             <Header
-              title="Recommend for you"
+              title="Home"
               headerTitleStyle={{
                 fontSize: 27,
                 fontFamily: FONTS.Heavy,
@@ -50,6 +53,7 @@ const MainTab = () => {
                       style={{width: 44, height: 44}}
                       link
                       color={tintColor}
+                      onPress={() =>navigate('Search')}
                     />
                     <Button
                       iconSource={Assets.iconHeader.ic_option}
