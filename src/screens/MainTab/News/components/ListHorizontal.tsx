@@ -56,7 +56,7 @@ const ListHorizontal = () => {
   const RenderLoader = () => {
     return loading ? (
       <View>
-        <ActivityIndicator size="large" color={Colors.blue} />
+        <ActivityIndicator size="large" color={Colors.primary} />
       </View>
     ) : null;
   };

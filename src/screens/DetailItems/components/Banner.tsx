@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
     height: heightCarousel,
     marginHorizontal: 16,
     marginBottom: 16,
+    marginTop:60
   },
   loopCarousel: {
     position: 'absolute',
