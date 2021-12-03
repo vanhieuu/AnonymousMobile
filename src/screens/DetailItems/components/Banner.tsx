@@ -4,6 +4,7 @@ import {Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
 import {Text, View, Card, Image, Carousel, Colors} from 'react-native-ui-lib';
 import {RootStackParamList} from '../../../nav/RootStack';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { MainTabParamList } from '../../../nav/MainTab';
 const widthScreen = Dimensions.get('window').width;
 const widthCarousel = widthScreen - 32;
 const heightCarousel = (widthCarousel / 344) * 242;
@@ -23,14 +24,18 @@ const ItemBanner = ({image}: {image: string}) => {
 const Banner = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'DetailItems'>>();
   const product = route.params.item;
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>()
+  const navigation = useNavigation<NavigationProp<MainTabParamList>>()
+  const onPressGoBack = React.useCallback(()=>{
+        navigation.navigate('News')
+    // console.log(navigation.navigate)
+  },[])
   return (
     <View style={styles.container}>
       <Icon
             name='long-arrow-left'
             size={20}
             color={Colors.black}
-            onPress={() => navigation.goBack()}
+            onPress={onPressGoBack}
           />
       <Carousel
         autoplay={false}

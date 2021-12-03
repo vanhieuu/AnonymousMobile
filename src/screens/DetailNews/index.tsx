@@ -10,11 +10,12 @@ import {RootStackParamList} from '../../nav/RootStack';
 import {Colors, Text, View} from 'react-native-ui-lib';
 import {Header} from 'react-native-elements';
 import RenderHTML from 'react-native-render-html';
+import {MainTabParamList} from '../../nav/MainTab';
 
 const DetailNews = () => {
   const {width} = useWindowDimensions();
   const route = useRoute<RouteProp<RootStackParamList, 'DetailNews'>>();
-  const {goBack,navigate} = useNavigation<NavigationProp<RootStackParamList>>();
+  const {goBack, navigate} = useNavigation<NavigationProp<MainTabParamList>>();
   const detailNews = route.params?.item;
   const source = {
     html: `<h1>This is a heading</h1>
@@ -32,7 +33,7 @@ const DetailNews = () => {
           icon: 'arrow-left',
           color: '#fff',
           onPress: () => {
-            navigate('Home');
+            navigate('News');
           },
         }}
         barStyle="light-content"
