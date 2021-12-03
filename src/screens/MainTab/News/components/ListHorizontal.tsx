@@ -24,39 +24,6 @@ if (Platform.OS === 'android') {
   }
 }
 
-const ItemList = ({item}: {item: INewsData}) => {
-  const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
-
-  const onPressNews = React.useCallback(() => {
-    navigate('DetailNews', {
-      item,
-    });
-  }, []);
-
-  return (
-    <Card style={styles.containerItem} onPress={() => console.log('Press Me')}>
-      <View paddingL-16 paddingR-6 marginB-11>
-        <Text b13 color={Colors.red}>
-          {item.title}
-        </Text>
-      </View>
-      <View
-        absT
-        bg-white
-        marginT-10
-        marginL-10
-        br100
-        paddingH-8
-        paddingV-2
-        backgroundColor={Colors.red}>
-        <Text h8 color={'blue'}>
-          {item.creator}
-        </Text>
-      </View>
-    </Card>
-  );
-};
-
 const ListHorizontal = () => {
   const [news, setNews] = React.useState<INewsData[]>([]);
   const [loading, setLoading] = React.useState(false);
