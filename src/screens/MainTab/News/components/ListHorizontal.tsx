@@ -105,8 +105,8 @@ const ListHorizontal = () => {
         renderItem={({item}) => {
           return <ItemCard item={item} />;
         }}
-        numColumns={3}
-        key={3}
+        numColumns={2}
+        key={2}
         onEndReached={onEndReached}
         onEndReachedThreshold={0}
         keyExtractor={(item, index) => index.toString()}

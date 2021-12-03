@@ -30,7 +30,6 @@ const DetailItems = () => {
               style={{height: 40, width: 40}}
               
             />
-            
           </View>
         </View>
         <Text h17 black marginL-12>

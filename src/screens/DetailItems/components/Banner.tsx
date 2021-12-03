@@ -30,7 +30,7 @@ const Banner = () => {
             name='long-arrow-left'
             size={20}
             color={Colors.black}
-            onPress={() => navigation.navigate('Home')}
+            onPress={() => navigation.goBack()}
           />
       <Carousel
         autoplay={false}

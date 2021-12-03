@@ -14,7 +14,7 @@ const ItemCard = ({item}: {item: INewsData}) => {
   }, []);
 
   return (
-    <View backgroundColor="#ffcdd2">
+    <View backgroundColor="#ffff">
       <TouchableOpacity onPress={onPressItem} style={{flexDirection: 'column'}}>
         <Card style={styles.container} >
           <View style={styles.contentItem}>
