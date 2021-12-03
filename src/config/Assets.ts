@@ -21,3 +21,7 @@ Assets.loadAssetsGroup('iconHeader', {
 Assets.loadAssetsGroup('imgNewScreen', {
   ic_bg: require('../assets/img_new_bg.png'),
 });
+Assets.loadAssetsGroup('icons',{
+  ic_ticket:require('../assets/Ticket.png'),
+  ic_back:require('../assets/arrowBack.png')
+})

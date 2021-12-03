@@ -15,8 +15,8 @@ const ItemCard = ({item}: {item: INewsData}) => {
 
   return (
     <View backgroundColor="#ffcdd2">
-      <TouchableOpacity onPress={onPressItem}>
-        <Card style={styles.container} row>
+      <TouchableOpacity onPress={onPressItem} style={{flexDirection: 'column'}}>
+        <Card style={styles.container} >
           <View style={styles.contentItem}>
             <Text h10 black marginT-10 marginL-10 paddingV-2 paddingH-8>
               {item.creator}
@@ -53,7 +53,7 @@ export default ItemCard;
 
 const styles = StyleSheet.create({
   container: {
-    width: widthScreen - 32,
+    width: widthScreen - 198,
     backgroundColor: '#ffff',
     shadowColor: 'red',
     shadowOffset: {
@@ -65,13 +65,13 @@ const styles = StyleSheet.create({
     elevation: 2,
     alignSelf: 'center',
     marginBottom: 10,
+    flexDirection: 'column',
   },
   contentItem: {
     overflow: 'hidden',
-    borderTopLeftRadius: 8,
-    borderBottomLeftRadius: 8,
     backgroundColor: 'white',
     height: 30,
     width: 70,
+    
   },
 });

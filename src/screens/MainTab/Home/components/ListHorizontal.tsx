@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Alert,
   FlatList,
   LayoutAnimation,
   Platform,
@@ -9,7 +8,7 @@ import {
 } from 'react-native';
 import {Colors, Card, Text, View} from 'react-native-ui-lib';
 import URL from '../../../../config/Api';
-import {IResProduct} from '../../../../redux/authProductSlice';
+
 
 import {IProduct} from '../../../../types/IProduct';
 

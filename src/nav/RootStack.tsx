@@ -22,6 +22,7 @@ import DetailNews from '../screens/DetailNews';
 import SignIn from '../screens/SignIn';
 import URL from '../config/Api';
 import {Colors, View} from 'react-native-ui-lib';
+import Search from '../screens/Search';
 
 export type RootStackParamList = {
   Onboarding: undefined;
@@ -125,6 +126,11 @@ const RootStack = () => {
         <Stack.Screen
           name="DetailNews"
           component={DetailNews}
+          options={{headerShown: false}}
+        />
+         <Stack.Screen
+          name="Search"
+          component={Search}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

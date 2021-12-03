@@ -32,7 +32,7 @@ const DetailNews = () => {
           icon: 'arrow-left',
           color: '#fff',
           onPress: () => {
-            navigate('MainTab');
+            navigate('Home');
           },
         }}
         barStyle="light-content"

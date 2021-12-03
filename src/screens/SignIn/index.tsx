@@ -23,7 +23,7 @@ const SignIn = () => {
   const [password, setPassword] = React.useState('');
   const [loading, setLoading] = React.useState<boolean>(false);
   const [errorText, setErrorText] = React.useState('');
-  const onPressLogin = () => {
+  const  onPressLogin = async () =>  {
     setErrorText('');
     if (!username) {
       Alert.alert('Please fill name');
@@ -36,7 +36,7 @@ const SignIn = () => {
     setLoading(true);
     let dataToSend = {username: username, password: password};
 
-    fetch(URL.Login, {
+     await fetch(URL.Login, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

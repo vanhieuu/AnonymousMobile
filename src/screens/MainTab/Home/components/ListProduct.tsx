@@ -29,7 +29,7 @@ const ListProduct = ({ListHeaderComponent}: Props) => {
   const productID = useSelector<RootState, string>(state =>state.product.productId)
   const [loading, setLoading] = React.useState(true);
   const [product, setProduct] = React.useState<IProduct[]>();
-  React.useEffect(() => {
+ React.useEffect(() => {
     fetch(URL.item(productID), {
       method: 'GET',
       headers: {
@@ -51,6 +51,7 @@ const ListProduct = ({ListHeaderComponent}: Props) => {
   return (
     <FlatList
       data={product}
+      numColumns={2}
       renderItem={({item}) => {
         return <ItemProduct item={item} />;
       }}

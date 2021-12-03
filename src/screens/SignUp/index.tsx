@@ -34,7 +34,7 @@ const SignUp = () => {
   const {navigate, goBack} =
     useNavigation<NavigationProp<RootStackParamList>>();
 
-  const handleSubmitButton = () => {
+  const handleSubmitButton = async () => {
     setErrorText('');
     if (!username) {
       Alert.alert('Please fill Name');
@@ -60,7 +60,7 @@ const SignUp = () => {
     };
     var formBody = [];
     formBody.push(dataToSend);
-    fetch(URL.Register, {
+    await fetch(URL.Register, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -98,7 +98,7 @@ const SignUp = () => {
         <TouchableOpacity
           style={styles.btnLogin}
           activeOpacity={0.5}
-          onPress={() => navigate('MainTab')}>
+          onPress={() => goBack()}>
           <Text style={styles.btnLogin}>Go Home</Text>
         </TouchableOpacity>
       </View>
@@ -222,7 +222,7 @@ const SignUp = () => {
             style={{color: Colors.primary}}
             centerH
             center
-            onPress={() => navigate('MainTab')}>
+            onPress={() => navigate('SignIn')}>
             SignIn
           </Text>
         </View>
