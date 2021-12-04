@@ -1,7 +1,7 @@
 import {NavigationProp, RouteProp, useNavigation, useRoute} from '@react-navigation/core';
 import React from 'react';
-import {Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
-import {Text, View, Card, Image, Carousel, Colors} from 'react-native-ui-lib';
+import {Dimensions, StyleSheet,} from 'react-native';
+import {View,  Image, Carousel, Colors} from 'react-native-ui-lib';
 import {RootStackParamList} from '../../../nav/RootStack';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { MainTabParamList } from '../../../nav/MainTab';

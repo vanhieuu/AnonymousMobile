@@ -1,4 +1,3 @@
-import {NavigationProp, useNavigation} from '@react-navigation/core';
 import React from 'react';
 import {
   ActivityIndicator,
@@ -6,16 +5,14 @@ import {
   LayoutAnimation,
   Platform,
   StyleSheet,
-  TouchableOpacity,
   UIManager,
 } from 'react-native';
-import {View, Text, Colors, Card} from 'react-native-ui-lib';
+import {View, Text, Colors} from 'react-native-ui-lib';
 
 import URL from '../../../../config/Api';
-import {RootStackParamList} from '../../../../nav/RootStack';
+
 import {INewsData} from '../../../../redux/newSlice';
-import {RootState} from '../../../../redux/store';
-import {IResNews} from '../../../../types/IProduct';
+
 import ItemCard from './ItemCard';
 
 if (Platform.OS === 'android') {

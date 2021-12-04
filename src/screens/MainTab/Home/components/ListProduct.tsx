@@ -1,16 +1,8 @@
 import React from 'react';
-import {
-  Alert,
-  FlatList,
-  LayoutAnimation,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import RNGestureHandlerButton from 'react-native-gesture-handler/lib/typescript/components/GestureHandlerButton';
+import {FlatList, LayoutAnimation, StyleSheet} from 'react-native';
+
 import {useSelector} from 'react-redux';
 import URL from '../../../../config/Api';
-import { IResProduct } from '../../../../redux/authProductSlice';
 
 import {RootState} from '../../../../redux/store';
 import {IProduct} from '../../../../types/IProduct';
@@ -26,10 +18,12 @@ interface Props {
 
 const ListProduct = ({ListHeaderComponent}: Props) => {
   // const token = useSelector<RootState, string>(state => state.auth.accessToken);
-  const productID = useSelector<RootState, string>(state =>state.product.productId)
+  const productID = useSelector<RootState, string>(
+    state => state.product.productId,
+  );
   const [loading, setLoading] = React.useState(true);
   const [product, setProduct] = React.useState<IProduct[]>();
- React.useEffect(() => {
+  React.useEffect(() => {
     fetch(URL.item(productID), {
       method: 'GET',
       headers: {
@@ -38,7 +32,7 @@ const ListProduct = ({ListHeaderComponent}: Props) => {
       },
     })
       .then(response => response.json())
-      .then((json) => {
+      .then(json => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
         setProduct(json);
         setLoading(false);

@@ -1,11 +1,11 @@
 import {RouteProp, useRoute} from '@react-navigation/core';
 import React from 'react';
-import {ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {RootStackParamList} from '../../../nav/RootStack';
 import {Colors, Text, View, Image, Button} from 'react-native-ui-lib';
-import {Rating, AirbnbRating} from 'react-native-ratings';
+import {AirbnbRating} from 'react-native-ratings';
 import useBoolean from '../../../hook/useBoolean';
-import ButtonGroups from './ButtonGroups';
+
 import ShowModal from './ShowModal';
 interface Props {
   ListHeaderComponent:
@@ -18,8 +18,7 @@ interface Props {
 const ProductInfo = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'DetailItems'>>();
   const itemInfo = route.params.item;
-  const [showModal, onShowModal, onHideModal] = useBoolean();
-  const [modalVisible, setModalVisible] = React.useState<boolean>(false);
+
   return (
     <View bg-white marginT-15>
       <View row style={{justifyContent: 'space-between'}} marginL-12 marginT-10>
@@ -84,7 +83,7 @@ const ProductInfo = () => {
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
-          marginTop: 100
+          marginTop: 100,
         }}>
         <ShowModal />
         <ShowModal />

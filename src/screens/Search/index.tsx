@@ -11,7 +11,7 @@ import URL from '../../config/Api';
 import {RootState} from '../../redux/store';
 import {Text, View, Colors, Image} from 'react-native-ui-lib';
 import {IProduct} from '../../types/IProduct';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 const Search = () => {
   const [filterData, setFilterData] = React.useState<IProduct[]>([]);
   const [masterData, setMasterData] = React.useState<IProduct[]>([]);
@@ -57,11 +57,12 @@ const Search = () => {
 
   const renderItem = React.useCallback(({item}: {item: IProduct}) => {
     return (
-      <View style={{justifyContent: 'space-around'}}>
+      <View style={{justifyContent: 'space-between',backgroundColor:'red'}}>
         <Image
           source={{uri: item.listphotos.find(element => element !== undefined)}}
-          width={80}
-          height={80}
+          width={120}
+          style={{flexDirection:'row',justifyContent:'space-between'}}
+          height={100}
         />
         <Text h10 paddingH-15 paddingV-15>
           {item.name.toUpperCase()}
@@ -79,7 +80,13 @@ const Search = () => {
   };
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View bg-white>
+      <View bg-red style={{backgroundColor: 'blue'}}>
+        <Icon
+          name="search"
+          size={20}
+          // color={'white'}
+          style={{backgroundColor: 'white'}}
+        />
         <TextInput
           style={styles.textInput}
           value={search}
@@ -90,13 +97,17 @@ const Search = () => {
             // setSearch(text);
           }}
         />
+      </View>
+     <View style={{justifyContent: 'space-between'}}>
         <FlatList
           data={filterData}
           keyExtractor={(item, index) => item._id.toString()}
           ItemSeparatorComponent={ItemSeparatorView}
           renderItem={renderItem}
+          numColumns={2}
+          key={2}
         />
-      </View>
+     </View>
     </SafeAreaView>
   );
 };
@@ -114,5 +125,7 @@ const styles = StyleSheet.create({
     margin: 5,
     borderColor: Colors.primary,
     backgroundColor: '#fff',
+    marginTop: 80,
+    marginLeft: 30,
   },
 });
