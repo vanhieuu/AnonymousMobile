@@ -5,7 +5,7 @@ import {
   useRoute,
 } from '@react-navigation/core';
 import React from 'react';
-import {SafeAreaView, StyleSheet, useWindowDimensions} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, useWindowDimensions} from 'react-native';
 import {RootStackParamList} from '../../nav/RootStack';
 import {Colors, Text, View} from 'react-native-ui-lib';
 import {Header} from 'react-native-elements';
@@ -18,41 +18,29 @@ const DetailNews = () => {
   const {goBack, navigate} = useNavigation<NavigationProp<MainTabParamList>>();
   const detailNews = route.params?.item;
   const source = {
-    html: `<h1>This is a heading</h1>
-    <p>This is a paragraph.</p>`,
+    html: `
+    <p>${detailNews.content}</p>`,
   };
   return (
-    <SafeAreaView>
+    <ScrollView>
       <Header
         placement="center"
         containerStyle={{
           backgroundColor: '#ffcdd2',
           justifyContent: 'space-around',
         }}
-        leftComponent={{
-          icon: 'arrow-left',
-          color: '#fff',
-          onPress: () => {
-            navigate('News');
-          },
-        }}
         barStyle="light-content"
         statusBarProps={{barStyle: 'light-content'}}
       />
       <View>
-        <View style={{justifyContent: 'space-between', left: 1}}>
+        <View style={{justifyContent: 'space-between', left: 1,padding:20}}>
           <RenderHTML source={source} contentWidth={width} />
           <Text>{detailNews?.creator}</Text>
         </View>
-        <View>
-          <Text h24>{detailNews?.title}</Text>
-        </View>
+
         <View height={2} bg-dark80 marginT-20 />
-        <View>
-          <Text>{detailNews?.content}</Text>
-        </View>
       </View>
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 

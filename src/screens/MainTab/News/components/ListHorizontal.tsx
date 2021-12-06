@@ -82,23 +82,4 @@ const ListHorizontal = () => {
 
 export default ListHorizontal;
 
-const styles = StyleSheet.create({
-  containerItem: {
-    width: '100%',
-    marginRight: 12,
-    backgroundColor: 'blue',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-    elevation: 2,
-    marginBottom: 12,
-  },
-  loaderStyle: {
-    marginVertical: 16,
-    alignItems: 'center',
-  },
-});
+const styles = StyleSheet.create({});

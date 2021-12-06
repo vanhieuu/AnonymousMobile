@@ -120,7 +120,7 @@ const SignUp = () => {
             {borderColor: isFocus ? '#E9707D' : '#eee'},
           ]}>
           <Input
-            placeholder="UserName"
+            placeholder="Tên đăng nhập"
             onFocus={onFocusChange}
             inputContainerStyle={styles.inputContainer}
             inputStyle={styles.inputText}
@@ -168,7 +168,7 @@ const SignUp = () => {
             {borderColor: isFocus ? '#E9707D' : '#eee'},
           ]}>
           <Input
-            placeholder="Password"
+            placeholder="Mật khẩu"
             onFocus={onFocusChange}
             inputContainerStyle={styles.inputContainer}
             inputStyle={styles.inputText}
@@ -191,7 +191,7 @@ const SignUp = () => {
             {borderColor: isFocus ? '#E9707D' : '#eee'},
           ]}>
           <Input
-            placeholder="Confirm Password"
+            placeholder="Xác nhận lại mật khẩu"
             onFocus={onFocusChange}
             inputContainerStyle={styles.inputContainer}
             inputStyle={styles.inputText}
@@ -213,17 +213,17 @@ const SignUp = () => {
           style={styles.btnLogin}
           activeOpacity={0.5}
           onPress={handleSubmitButton}>
-          <Text h16>REGISTER</Text>
+          <Text h16>ĐĂNG KÝ</Text>
         </TouchableOpacity>
         <View style={{justifyContent: 'space-between'}}>
-          <Text center>Already have an account</Text>
+          <Text center>Đã có tài khoản </Text>
           <Text
             b13
             style={{color: Colors.primary}}
             centerH
             center
             onPress={() => navigate('SignIn')}>
-            SignIn
+                Đăng nhập ngay
           </Text>
         </View>
       </View>

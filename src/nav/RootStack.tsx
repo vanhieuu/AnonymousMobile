@@ -1,10 +1,10 @@
 import React from 'react';
 import {ActivityIndicator, Alert} from 'react-native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createNativeStackNavigator, NativeStackHeaderProps} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import OnboardingScreen from '../screens/Onboarding';
 import SignUp from '../screens/SignUp';
-import MainTab from './MainTab';
+import MainTab, { MainTabParamList } from './MainTab';
 import {IProduct} from '../types/IProduct';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
@@ -15,15 +15,18 @@ import {
   onLogin,
   updateStatusAuth,
 } from '../redux/authSlice';
+import {NavigationProp, useNavigation} from '@react-navigation/core';
 import DetailItems from '../screens/DetailItems';
 import ForgetPassword from '../screens/ResetPassword';
 import {INewsData} from '../redux/newSlice';
 import DetailNews from '../screens/DetailNews';
 import SignIn from '../screens/SignIn';
 import URL from '../config/Api';
-import {Colors, View} from 'react-native-ui-lib';
+import {Assets, Button, Colors, View} from 'react-native-ui-lib';
 import Search from '../screens/Search';
-
+import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
+import {Header} from '@react-navigation/elements';
+import {FONTS} from '../config/Typo';
 export type RootStackParamList = {
   Onboarding: undefined;
   SignIn: undefined;
@@ -37,12 +40,13 @@ export type RootStackParamList = {
   DetailNews: {
     item: INewsData;
   };
-  Search:undefined;
+  Search: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const RootStack = () => {
+  const {navigate} = useNavigation<NavigationProp<RootStackParamList | MainTabParamList>>();
   const statusAuth = useSelector<RootState, EStatusAuth>(
     state => state.auth.statusAuth,
   );
@@ -105,7 +109,35 @@ const RootStack = () => {
         <Stack.Screen
           name="SignUp"
           component={SignUp}
-          options={{headerShown: false}}
+          options={{
+            header: (props:NativeStackHeaderProps) => (
+              <Header
+                title="Tin Tức"
+                headerTitleStyle={{
+                  fontSize: 27,
+                  fontFamily: FONTS.Heavy,
+                }}
+                headerTitleAlign="left"
+                headerRight={({tintColor}) => {
+                  return (
+                    <View row>
+                      <Button
+                        iconSource={Assets.icons.ic_back}
+                        style={{width: 44, height: 44}}
+                        link
+                        color={tintColor}
+                        onPress={() => navigate('Home')}
+                      />
+                    </View>
+                  );
+                }}
+                headerStyle={{
+                  backgroundColor: Colors.transparent,
+                }}
+                headerTintColor={Colors.white}
+              />
+            ),
+          }}
         />
 
         <Stack.Screen
@@ -116,7 +148,35 @@ const RootStack = () => {
         <Stack.Screen
           name="DetailItems"
           component={DetailItems}
-          options={{headerShown: false}}
+          options={{
+            header: (props:NativeStackHeaderProps) => (
+              <Header
+                title="Tin Tức"
+                headerTitleStyle={{
+                  fontSize: 27,
+                  fontFamily: FONTS.Heavy,
+                }}
+                headerTitleAlign="left"
+                headerRight={({tintColor}) => {
+                  return (
+                    <View row>
+                      <Button
+                        iconSource={Assets.icons.ic_back}
+                        style={{width: 44, height: 44}}
+                        link
+                        color={tintColor}
+                        onPress={() => navigate('Home')}
+                      />
+                    </View>
+                  );
+                }}
+                headerStyle={{
+                  backgroundColor: Colors.transparent,
+                }}
+                headerTintColor={Colors.white}
+              />
+            ),
+          }}
         />
         <Stack.Screen
           name="ForgetPassword"
@@ -126,9 +186,9 @@ const RootStack = () => {
         <Stack.Screen
           name="DetailNews"
           component={DetailNews}
-          options={{headerShown: false}}
+          options={{headerShown: true}}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="Search"
           component={Search}
           options={{headerShown: false}}

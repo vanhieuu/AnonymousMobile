@@ -1,22 +1,42 @@
 import {NavigationProp, useNavigation} from '@react-navigation/core';
 import React from 'react';
-import {Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  TouchableOpacity,
+  useWindowDimensions,
+} from 'react-native';
 import {Card, Colors, Text, View} from 'react-native-ui-lib';
 import {RootStackParamList} from '../../../../nav/RootStack';
 import {INewsData} from '../../../../redux/newSlice';
+import RenderHTML from 'react-native-render-html';
 const widthScreen = Dimensions.get('window').width;
+
 const ItemCard = ({item}: {item: INewsData}) => {
   const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
+  const {width} = useWindowDimensions();
   const onPressItem = React.useCallback(() => {
     navigate('DetailNews', {
       item,
     });
   }, []);
+  const sourceTitle = {
+    html: `<p style="text-Color:'#000';">${item.creator}</p>`,
+  };
+
+  const tagsStyles = {
+    body: {
+      color: '#000',
+    },
+    a: {
+      color: 'green',
+    },
+  };
 
   return (
     <View backgroundColor="#ffff">
       <TouchableOpacity onPress={onPressItem} style={{flexDirection: 'column'}}>
-        <Card style={styles.container} >
+        <Card style={styles.container}>
           <View style={styles.contentItem}>
             <Text h10 black marginT-10 marginL-10 paddingV-2 paddingH-8>
               {item.creator}
@@ -25,22 +45,14 @@ const ItemCard = ({item}: {item: INewsData}) => {
           </View>
           <View>
             <View row>
-              <View
-                backgroundColor={'red'}
-                br100
-                marginT-10
-                marginL-10
-                paddingV-2
-                paddingH-8>
+              <View br100 marginT-10 marginL-10 paddingV-2 paddingH-8 backgroundColor={Colors.black}>
                 <Text h8 color={Colors.white}>
                   {item.title}
                 </Text>
               </View>
             </View>
             <View paddingL-16 paddingR-6 marginB-15>
-              <Text h16 marginT-10 numberOfLines={2} color={'#6f6f6f'}>
-                {item.content}
-              </Text>
+              <RenderHTML source={sourceTitle} contentWidth={width} tagsStyles={tagsStyles} />
             </View>
           </View>
         </Card>
@@ -55,13 +67,6 @@ const styles = StyleSheet.create({
   container: {
     width: widthScreen - 198,
     backgroundColor: '#ffff',
-    shadowColor: 'red',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
     elevation: 2,
     alignSelf: 'center',
     marginBottom: 10,
@@ -72,6 +77,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     height: 30,
     width: 70,
-    
   },
 });

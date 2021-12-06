@@ -26,11 +26,11 @@ const SignIn = () => {
   const  onPressLogin = async () =>  {
     setErrorText('');
     if (!username) {
-      Alert.alert('Please fill name');
+      Alert.alert('Tên đăng nhập không được để trống');
       return;
     }
     if (!password) {
-      Alert.alert('Please fill Password');
+      Alert.alert('Mật khẩu không được để trống ');
       return;
     }
     setLoading(true);
@@ -49,7 +49,7 @@ const SignIn = () => {
         const accessToken = json.accessToken;
         //login fail
         if (!accessToken) {
-          Alert.alert('wrong information', json.message);
+          Alert.alert('Sai thông tin đăng nhập ', json.message);
           setLoading(false);
           return;
         }
@@ -80,7 +80,7 @@ const SignIn = () => {
             {borderColor: isFocus ? '#E9707D' : '#eee'},
           ]}>
           <Input
-            placeholder="userName"
+            placeholder="Tên đăng nhập"
             onFocus={onFocusChange}
             inputContainerStyle={styles.inputContainer}
             inputStyle={styles.inputText}
@@ -102,7 +102,7 @@ const SignIn = () => {
             {borderColor: isFocus ? '#E9707D' : '#eee'},
           ]}>
           <Input
-            placeholder="password"
+            placeholder="Mật khẩu"
             onFocus={onFocusChange}
             inputContainerStyle={styles.inputContainer}
             inputStyle={styles.inputText}
@@ -119,14 +119,14 @@ const SignIn = () => {
           />
         </View>
         <View style={{width: '90%'}}>
-          <Text
+          {/* <Text
             b13
             black
             style={{alignSelf: 'flex-end', color: Colors.blue}}
             onPress={() => navigate('ForgetPassword')}>
             {' '}
             Forgot your password?
-          </Text>
+          </Text> */}
         </View>
         {errorText != '' ? (
           <Text style={styles.errorTextStyle}>{errorText}</Text>
@@ -137,17 +137,12 @@ const SignIn = () => {
           onPress={onPressLogin}>
           <Text h16>Login</Text>
         </TouchableOpacity>
-        <Text b13 black>
-          Or connect using{' '}
-        </Text>
         <View row>
-          <Account icon="facebook" color="#3b5c8f" title="Facebook" />
-          <Account icon="google" color="#ec482f" title="Google" />
         </View>
         <View row>
           <Text b13 black center>
             {' '}
-            Don't Have An Account
+            Bạn không có tài khoản ? 
           </Text>
           <Text
             b13
@@ -156,7 +151,7 @@ const SignIn = () => {
             onPress={() => {
               navigate('SignUp');
             }}>
-            SignUp
+           Đăng kí ngay 
           </Text>
         </View>
       </View>
