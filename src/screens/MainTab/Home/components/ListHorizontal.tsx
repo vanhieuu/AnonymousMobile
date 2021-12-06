@@ -64,9 +64,9 @@ const ListHorizontal = () => {
   return (
     <View paddingV-12 backgroundColor="#fff">
       <View row spread paddingH-16 centerV>
-        <Text h24>Hot Item </Text>
+        <Text h24>Sản phẩm nổi bật</Text>
         <Text h15 color={Colors.dark70}>
-          More
+          Xem thêm
         </Text>
       </View>
       {loading ? (
@@ -116,13 +116,6 @@ const styles = StyleSheet.create({
     width: 190,
     marginRight: 12,
     backgroundColor: Colors.white,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
     elevation: 2,
   },
 });

@@ -87,7 +87,6 @@ const ProductInfo = () => {
         }}>
         <ShowModal />
         <ShowModal />
-        <ShowModal />
       </View>
     </View>
   );

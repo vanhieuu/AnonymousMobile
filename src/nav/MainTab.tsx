@@ -80,7 +80,7 @@ const MainTab = () => {
             <Image assetGroup="iconTab" assetName="ic_new" tintColor={color} />
           ),
           tabBarLabel: 'News',
-          headerShown: false,
+          headerShown: true,
           
         }}
       />
@@ -96,7 +96,7 @@ const MainTab = () => {
             />
           ),
           tabBarLabel: 'Shop',
-          headerShown: false,
+          headerShown: true,
           tabBarBadge: 1
         }}
       />
@@ -112,7 +112,7 @@ const MainTab = () => {
             />
           ),
           tabBarLabel: 'Profile',
-          headerShown: false
+          headerShown: true
         }}
       />
     </Tab.Navigator>

@@ -31,6 +31,7 @@ const DetailNews = () => {
         }}
         barStyle="light-content"
         statusBarProps={{barStyle: 'light-content'}}
+        leftComponent={{icon:'back' , color: Colors.bgApp}}
       />
       <View>
         <View style={{justifyContent: 'space-between', left: 1,padding:20}}>

@@ -1,12 +1,18 @@
-import {NavigationProp, RouteProp, useNavigation, useRoute} from '@react-navigation/core';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/core';
 import React from 'react';
-import {Dimensions, StyleSheet,} from 'react-native';
-import {View,  Image, Carousel, Colors} from 'react-native-ui-lib';
+import {Dimensions, StyleSheet} from 'react-native';
+import {View, Image, Carousel, Colors} from 'react-native-ui-lib';
 import {RootStackParamList} from '../../../nav/RootStack';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {CommonActions} from '@react-navigation/native';
 import { MainTabParamList } from '../../../nav/MainTab';
 const widthScreen = Dimensions.get('window').width;
-const widthCarousel = widthScreen - 32;
+const widthCarousel = widthScreen-32;
 const heightCarousel = (widthCarousel / 344) * 242;
 
 const ItemBanner = ({image}: {image: string}) => {
@@ -14,7 +20,7 @@ const ItemBanner = ({image}: {image: string}) => {
     <View flex centerV backgroundColor={Colors.black}>
       <Image
         overlayType={Image.overlayTypes.BOTTOM}
-        style={{flex: 1}}
+        style={{flex:1}}
         source={{uri: image}}
       />
     </View>
@@ -24,30 +30,21 @@ const ItemBanner = ({image}: {image: string}) => {
 const Banner = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'DetailItems'>>();
   const product = route.params.item;
-  const navigation = useNavigation<NavigationProp<MainTabParamList>>()
-  const onPressGoBack = React.useCallback(()=>{
-        navigation.navigate('News')
-    // console.log(navigation.navigate)
-  },[])
+
+ 
+
   return (
     <View style={styles.container}>
-      <Icon
-            name='long-arrow-left'
-            size={20}
-            color={Colors.black}
-            onPress={onPressGoBack}
-          />
       <Carousel
         autoplay={false}
         pageWidth={widthCarousel}
-        containerStyle={{height: heightCarousel}}
+        containerStyle={{height: "100%"}}
         loop
         pageControlProps={{
           size: 10,
           containerStyle: styles.loopCarousel,
           color: Colors.primary,
           inactiveColor: Colors.white,
-      
         }}
         pageControlPosition={Carousel.pageControlPositions.OVER}>
         {product.listphotos.map((image, i) => {
@@ -69,7 +66,7 @@ const styles = StyleSheet.create({
     height: heightCarousel,
     marginHorizontal: 16,
     marginBottom: 16,
-    marginTop:60
+    marginTop: 10,
   },
   loopCarousel: {
     position: 'absolute',

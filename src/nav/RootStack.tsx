@@ -1,10 +1,14 @@
 import React from 'react';
-import {ActivityIndicator, Alert} from 'react-native';
-import {createNativeStackNavigator, NativeStackHeaderProps} from '@react-navigation/native-stack';
-import {NavigationContainer} from '@react-navigation/native';
+import {Alert} from 'react-native';
+import {
+  createNativeStackNavigator,
+  NativeStackHeaderProps,
+  NativeStackScreenProps,
+} from '@react-navigation/native-stack';
+import {createNavigationContainerRef} from '@react-navigation/native';
 import OnboardingScreen from '../screens/Onboarding';
 import SignUp from '../screens/SignUp';
-import MainTab, { MainTabParamList } from './MainTab';
+import MainTab from './MainTab';
 import {IProduct} from '../types/IProduct';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
@@ -15,25 +19,28 @@ import {
   onLogin,
   updateStatusAuth,
 } from '../redux/authSlice';
-import {NavigationProp, useNavigation} from '@react-navigation/core';
+
 import DetailItems from '../screens/DetailItems';
 import ForgetPassword from '../screens/ResetPassword';
 import {INewsData} from '../redux/newSlice';
 import DetailNews from '../screens/DetailNews';
 import SignIn from '../screens/SignIn';
 import URL from '../config/Api';
-import {Assets, Button, Colors, View} from 'react-native-ui-lib';
+import {NavigationProp, useNavigation} from '@react-navigation/core';
 import Search from '../screens/Search';
-import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
-import {Header} from '@react-navigation/elements';
+
+import {NavigationContainer} from '@react-navigation/native';
+import {Header} from 'react-native-elements';
 import {FONTS} from '../config/Typo';
+import {Assets, Button} from 'react-native-ui-lib';
+
 export type RootStackParamList = {
   Onboarding: undefined;
   SignIn: undefined;
   SignUp: undefined;
   ForgetPassword: undefined;
   MainTab: undefined;
-  Home: undefined;
+  Home:undefined;
   DetailItems: {
     item: IProduct;
   };
@@ -42,14 +49,16 @@ export type RootStackParamList = {
   };
   Search: undefined;
 };
-
+type Props = NativeStackScreenProps<RootStackParamList>;
 const Stack = createNativeStackNavigator<RootStackParamList>();
+const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
 const RootStack = () => {
-  const {navigate} = useNavigation<NavigationProp<RootStackParamList | MainTabParamList>>();
+  const {navigation} = useNavigation<Props>()
   const statusAuth = useSelector<RootState, EStatusAuth>(
     state => state.auth.statusAuth,
   );
+
   const token = useSelector<RootState, string>(state => state.auth.accessToken);
   const dispatch = useDispatch();
   const checkLogin = React.useCallback(async () => {
@@ -93,12 +102,19 @@ const RootStack = () => {
   //   );
   // }
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Onboarding">
+    <NavigationContainer ref={navigationRef}>
+      <Stack.Navigator >
         <Stack.Screen
           name="Onboarding"
           component={OnboardingScreen}
           options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="SignUp"
+          component={SignUp}
+          options={{
+            headerShown: true,
+          }}
         />
         <Stack.Screen
           name="SignIn"
@@ -107,75 +123,34 @@ const RootStack = () => {
         />
 
         <Stack.Screen
-          name="SignUp"
-          component={SignUp}
-          options={{
-            header: (props:NativeStackHeaderProps) => (
-              <Header
-                title="Tin Tức"
-                headerTitleStyle={{
-                  fontSize: 27,
-                  fontFamily: FONTS.Heavy,
-                }}
-                headerTitleAlign="left"
-                headerRight={({tintColor}) => {
-                  return (
-                    <View row>
-                      <Button
-                        iconSource={Assets.icons.ic_back}
-                        style={{width: 44, height: 44}}
-                        link
-                        color={tintColor}
-                        onPress={() => navigate('Home')}
-                      />
-                    </View>
-                  );
-                }}
-                headerStyle={{
-                  backgroundColor: Colors.transparent,
-                }}
-                headerTintColor={Colors.white}
-              />
-            ),
-          }}
-        />
-
-        <Stack.Screen
-          name="MainTab"
-          component={MainTab}
-          options={{headerShown: false}}
+          name="Search"
+          component={Search}
+          options={{headerShown: true}}
         />
         <Stack.Screen
           name="DetailItems"
           component={DetailItems}
           options={{
-            header: (props:NativeStackHeaderProps) => (
-              <Header
-                title="Tin Tức"
-                headerTitleStyle={{
-                  fontSize: 27,
-                  fontFamily: FONTS.Heavy,
-                }}
-                headerTitleAlign="left"
-                headerRight={({tintColor}) => {
-                  return (
-                    <View row>
-                      <Button
-                        iconSource={Assets.icons.ic_back}
-                        style={{width: 44, height: 44}}
-                        link
-                        color={tintColor}
-                        onPress={() => navigate('Home')}
-                      />
-                    </View>
-                  );
-                }}
-                headerStyle={{
-                  backgroundColor: Colors.transparent,
-                }}
-                headerTintColor={Colors.white}
-              />
-            ),
+            headerShown: true,
+          }}
+        />
+
+        <Stack.Screen
+          name="DetailNews"
+          component={DetailNews}
+          options={{
+            header: (props: NativeStackHeaderProps) => {
+              return (
+                <Button
+                  iconSource={Assets.icons.ic_back}
+                  style={{width: 44, height: 44}}
+                  link
+                  onPress={() => navigation.reset({
+                    routes:[{name:'Home'}]
+                  })}
+                />
+              );
+            },
           }}
         />
         <Stack.Screen
@@ -184,15 +159,11 @@ const RootStack = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="DetailNews"
-          component={DetailNews}
-          options={{headerShown: true}}
-        />
-        <Stack.Screen
-          name="Search"
-          component={Search}
+          name="MainTab"
+          component={MainTab}
           options={{headerShown: false}}
         />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

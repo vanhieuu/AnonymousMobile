@@ -42,7 +42,7 @@ const PageOnboarding = ({assetName, title, des, onPress}: IPageOnboarding) => {
         {/* <Text h30 marginB>
           {title}
         </Text> */}
-        <Text b17 color={Colors.dark10} marginB center>
+        <Text b17 color={Colors.dark10} marginB-35 center>
           {des}
         </Text>
         <Button
@@ -138,7 +138,7 @@ export default OnboardingScreen;
 const styles = StyleSheet.create({
   containerDots: {
     position: 'absolute',
-    top: (width / 250) * 313,
+    top: (width / 250) * 405,
     height: 10,
     alignSelf: 'center',
     flexDirection: 'row',
