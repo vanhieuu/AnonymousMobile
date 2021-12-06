@@ -1,26 +1,22 @@
-import {
-  NavigationProp,
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/core';
+import {RouteProp, useRoute} from '@react-navigation/core';
 import React from 'react';
-import {Dimensions, StyleSheet} from 'react-native';
+import {Dimensions, Platform, StyleSheet, UIManager} from 'react-native';
 import {View, Image, Carousel, Colors} from 'react-native-ui-lib';
 import {RootStackParamList} from '../../../nav/RootStack';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {CommonActions} from '@react-navigation/native';
-import { MainTabParamList } from '../../../nav/MainTab';
 const widthScreen = Dimensions.get('window').width;
-const widthCarousel = widthScreen-32;
+const widthCarousel = widthScreen - 32;
 const heightCarousel = (widthCarousel / 344) * 242;
-
+if (Platform.OS === 'android') {
+  if (UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
+}
 const ItemBanner = ({image}: {image: string}) => {
   return (
     <View flex centerV backgroundColor={Colors.black}>
       <Image
         overlayType={Image.overlayTypes.BOTTOM}
-        style={{flex:1}}
+        style={{flex: 1}}
         source={{uri: image}}
       />
     </View>
@@ -31,14 +27,12 @@ const Banner = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'DetailItems'>>();
   const product = route.params.item;
 
- 
-
   return (
     <View style={styles.container}>
       <Carousel
         autoplay={false}
         pageWidth={widthCarousel}
-        containerStyle={{height: "100%"}}
+        containerStyle={{height: '100%'}}
         loop
         pageControlProps={{
           size: 10,

@@ -4,7 +4,6 @@ import {StyleSheet} from 'react-native';
 import {RootStackParamList} from '../../../nav/RootStack';
 import {Colors, Text, View, Image, Button} from 'react-native-ui-lib';
 import {AirbnbRating} from 'react-native-ratings';
-import useBoolean from '../../../hook/useBoolean';
 
 import ShowModal from './ShowModal';
 interface Props {

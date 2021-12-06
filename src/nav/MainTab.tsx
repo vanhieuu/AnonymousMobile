@@ -29,13 +29,13 @@ const MainTab = () => {
         tabBarInactiveTintColor: Colors.dark50,
       }}>
       <Tab.Screen
-        name="Home"
+        name="Trang chủ"
         component={Home}
         options={{
           tabBarIcon: ({color}) => (
             <Image assetGroup="iconTab" assetName="ic_home" tintColor={color} />
           ),
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Trang chủ',
           headerTransparent: true,
           header: (props: BottomTabHeaderProps) => (
             <Header
@@ -73,19 +73,19 @@ const MainTab = () => {
         }}
       />
       <Tab.Screen
-        name="News"
+        name="Tin tức"
         component={News}
         options={{
           tabBarIcon: ({color}) => (
             <Image assetGroup="iconTab" assetName="ic_new" tintColor={color} />
           ),
-          tabBarLabel: 'News',
+          tabBarLabel: 'Tin tức',
           headerShown: true,
           
         }}
       />
       <Tab.Screen
-        name="Cart"
+        name="Giỏ hàng"
         component={Cart}
         options={{
           tabBarIcon: ({color}) => (
@@ -101,7 +101,7 @@ const MainTab = () => {
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name="Cá nhân"
         component={Profile}
         options={{
           tabBarIcon: ({color}) => (
@@ -112,7 +112,7 @@ const MainTab = () => {
             />
           ),
           tabBarLabel: 'Profile',
-          headerShown: true
+          headerShown: false
         }}
       />
     </Tab.Navigator>

@@ -99,7 +99,8 @@ export const getAuthAsync = async () => {
   try {
     const auth = await AsyncStorage.getItem('VoucherHunterAuth');
     if (auth) {
-      return JSON.parse(auth);
+      return JSON.parse(auth) ;
+     
     }
     return null;
   } catch (e) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, StyleSheet} from 'react-native';
+import {Dimensions, Platform, StyleSheet, UIManager} from 'react-native';
 import {View, Image} from 'react-native-ui-lib';
 import Banner from './components/Banner';
 import ListHorizontal from './components/ListHorizontal';
@@ -7,6 +7,11 @@ import ListProduct from './components/ListProduct';
 const widthScreen = Dimensions.get('window').width;
 const widthImg = widthScreen;
 const heightImg = (widthImg / 375) * 256;
+if (Platform.OS === 'android') {
+  if (UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
+}
 const Home = () => {
   return (
     <View flex bg-white marginT-16>

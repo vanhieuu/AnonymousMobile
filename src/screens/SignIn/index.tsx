@@ -73,7 +73,7 @@ const SignIn = () => {
           resizeMode="center"
           style={styles.image}
         />
-        <Text style={styles.textTitle}> Welcome Back</Text>
+        <Text style={styles.textTitle}> Chào mừng bạn đến với VoucherHunter</Text>
         <View
           style={[
             styles.containerInput,
