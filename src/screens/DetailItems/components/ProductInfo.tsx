@@ -14,10 +14,10 @@ interface Props {
     | undefined;
 }
 
-const ProductInfo = () => {
+const ProductInfo = ({ ListHeaderComponent}:Props) => {
   const route = useRoute<RouteProp<RootStackParamList, 'DetailItems'>>();
   const itemInfo = route.params.item;
-
+  console.log(route.name,route.key)
   return (
     <View bg-white marginT-15>
       <View row style={{justifyContent: 'space-between'}} marginL-12 marginT-10>

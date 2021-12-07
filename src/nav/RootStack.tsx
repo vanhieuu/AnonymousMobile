@@ -1,7 +1,10 @@
 import React from 'react';
-import { Alert} from 'react-native';
+import {Alert} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  useNavigationContainerRef,
+} from '@react-navigation/native';
 import OnboardingScreen from '../screens/Onboarding';
 import SignUp from '../screens/SignUp';
 import MainTab from './MainTab';
@@ -16,7 +19,7 @@ import {
   updateStatusAuth,
 } from '../redux/authSlice';
 import DetailItems from '../screens/DetailItems';
-import ForgetPassword from '../screens/ResetPassword';
+
 import {INewsData} from '../redux/newSlice';
 import DetailNews from '../screens/DetailNews';
 import SignIn from '../screens/SignIn';
@@ -26,9 +29,7 @@ export type RootStackParamList = {
   Onboarding: undefined;
   SignIn: undefined;
   SignUp: undefined;
-  ForgetPassword: undefined;
   MainTab: undefined;
-  Home: undefined;
   DetailItems: {
     item: IProduct;
   };
@@ -53,6 +54,7 @@ const RootStack = () => {
   const dispatch = useDispatch();
   const checkLogin = React.useCallback(async () => {
     const auth: IAuth | null = await getAuthAsync();
+    console.log(getAuthAsync());
     if (auth) {
       fetch(URL.ValidateToken, {
         method: 'GET',
@@ -69,7 +71,7 @@ const RootStack = () => {
           if (error) {
             Alert.alert('Đã hết phiên đăng nhập', 'vui lòng đăng nhập lại ');
             dispatch(updateStatusAuth({statusAuth: EStatusAuth.unauth}));
-            console.log(EStatusAuth.unauth);
+            console.log(EStatusAuth);
             console.log(json);
             return;
           }
@@ -78,77 +80,67 @@ const RootStack = () => {
           return json;
         });
     } else {
-      dispatch(updateStatusAuth({statusAuth: EStatusAuth.auth}));
+      dispatch(updateStatusAuth({statusAuth: EStatusAuth.unauth}));
     }
   }, []);
 
-  React.useEffect(() => {
-    setDidMount(true);
-    checkLogin();
-    setDidMount(false);
-  }, []);
-  if (!didMount) {
-    return null;
-  }
+  // React.useEffect(() => {
+  //   setDidMount(true);
+  //   checkLogin();
+  //   setDidMount(false);
+  // }, []);
+  // if (!didMount) {
+  //   return null;
+  // }
 
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="SignIn">
-        {statusAuth === EStatusAuth.unauth ? (
-          <>
-            <Stack.Screen
-              name="Onboarding"
-              component={OnboardingScreen}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="SignIn"
-              component={SignIn}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="SignUp"
-              component={SignUp}
-              options={{
-                headerShown: true,
-              }}
-            />
-            <Stack.Screen
-              name="ForgetPassword"
-              component={ForgetPassword}
-              options={{headerShown: false}}
-            />
-          </>
-        ) : (
-          <>
-            <Stack.Screen
-              name="MainTab"
-              component={MainTab}
-              options={{headerShown: false}}
-            />
+        <Stack.Screen
+          name="SignIn"
+          component={SignIn}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Onboarding"
+          component={OnboardingScreen}
+          options={{headerShown: false}}
+        />
 
-            <Stack.Screen
-              name="Search"
-              component={Search}
-              options={{headerShown: true}}
-            />
-            <Stack.Screen
-              name="DetailItems"
-              component={DetailItems}
-              options={{
-                headerShown: true,
-              }}
-            />
+        <Stack.Screen
+          name="SignUp"
+          component={SignUp}
+          options={{
+            headerShown: true,
+          }}
+        />
 
-            <Stack.Screen
-              name="DetailNews"
-              component={DetailNews}
-              options={{
-                headerShown: true,
-              }}
-            />
-          </>
-        )}
+        <Stack.Screen
+          name="MainTab"
+          component={MainTab}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="Search"
+          component={Search}
+          options={{headerShown: true}}
+        />
+        <Stack.Screen
+          name="DetailItems"
+          component={DetailItems}
+          options={{
+            headerShown: true,
+          }}
+        />
+
+        <Stack.Screen
+          name="DetailNews"
+          component={DetailNews}
+          options={{
+            headerShown: true,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

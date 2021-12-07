@@ -28,27 +28,33 @@ const ListHorizontal = () => {
   const onEndReached = React.useCallback(() => {
     setPageNumber(pageNumber + 1);
   }, [pageNumber]);
-  React.useEffect(() => {
-    setLoading(true);
-    fetch(URL.News(pageNumber), {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .then(json => {
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-        setNews([...news, ...json.data]);
-        setLoading(false);
-        // console.log(json.news);
-        return json;
+
+    const loadingNews = React.useCallback(async() =>{
+       await fetch(URL.News(pageNumber), {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
       })
-      .catch(error => {
-        console.error(error);
-      });
-  }, [pageNumber]);
+        .then(response => response.json())
+        .then(json => {
+          LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+          setNews([...news, ...json.data]);
+          setLoading(false);
+          // console.log(json.news);
+  
+          return json;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },[pageNumber] )
+
+  
+  React.useEffect(() => {
+      loadingNews();
+  }, []);
 
   const RenderLoader = () => {
     return loading ? (

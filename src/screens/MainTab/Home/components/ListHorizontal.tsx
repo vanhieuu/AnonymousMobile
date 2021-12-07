@@ -1,3 +1,4 @@
+import { RouteProp, useRoute } from '@react-navigation/core';
 import React from 'react';
 import {
   FlatList,
@@ -7,7 +8,10 @@ import {
   UIManager,
 } from 'react-native';
 import {Colors, Card, Text, View} from 'react-native-ui-lib';
+import { useSelector } from 'react-redux';
 import URL from '../../../../config/Api';
+import { RootStackParamList } from '../../../../nav/RootStack';
+import { RootState } from '../../../../redux/store';
 
 
 import {IProduct} from '../../../../types/IProduct';
@@ -40,13 +44,17 @@ const ItemList = ({item}: {item: IProduct}) => {
 
 const ListHorizontal = () => {
   const [products, setProducts] = React.useState<IProduct[]>();
-  const [loading, setLoading] = React.useState<boolean>(true);
-  React.useEffect(() => {
-    fetch(URL.Products, {
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const token = useSelector<RootState, string>(state => state.auth.accessToken);
+  const [didMount,setDidMount] = React.useState<boolean>(false)
+  const loadProduct = async () =>{
+    setLoading(true)
+   await fetch(URL.Products, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
     })
       .then(response => response.json())
@@ -59,10 +67,17 @@ const ListHorizontal = () => {
       .catch(err => {
         console.error(err);
       });
+  }
+  
+  
+  React.useEffect(() => {
+    setDidMount(true)
+   loadProduct()
+   setDidMount(false)
   }, []);
 
   return (
-    <View paddingV-12 backgroundColor="#fff">
+    <View paddingV-10 backgroundColor="#fff">
       <View row spread paddingH-16 centerV>
         <Text h24>Sản phẩm nổi bật</Text>
         <Text h15 color={Colors.dark70}>
@@ -70,7 +85,7 @@ const ListHorizontal = () => {
         </Text>
       </View>
       {loading ? (
-        <View row paddingH-16 paddingV-12>
+        <View row paddingH-11 paddingV-12>
           <Card
             style={[
               styles.containerItem,

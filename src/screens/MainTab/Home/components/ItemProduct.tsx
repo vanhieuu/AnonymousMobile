@@ -6,6 +6,9 @@ import {RootStackParamList} from '../../../../nav/RootStack';
 import {IProduct} from '../../../../types/IProduct';
 
 const widthScreen = Dimensions.get('window').width;
+
+
+
 const ItemProduct = ({item}: {item: IProduct}) => {
   const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
   // let firstItem = item.listphotos.find(element=>element!==undefined);
@@ -26,7 +29,6 @@ const ItemProduct = ({item}: {item: IProduct}) => {
               resizeMode="contain"
             />
           </View>
-
           <View>
             <View >
               <View marginB-11 marginH-20>
@@ -55,7 +57,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 12,
     flexDirection:'column',
-    borderColor: '#0064b7'
   },
   contentItem: {
     overflow: 'hidden',

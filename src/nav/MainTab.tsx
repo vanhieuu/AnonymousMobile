@@ -95,7 +95,7 @@ const MainTab = () => {
               tintColor={color}
             />
           ),
-          tabBarLabel: 'Shop',
+          tabBarLabel: 'Giỏ hàng',
           headerShown: true,
           tabBarBadge: 1
         }}
@@ -111,7 +111,7 @@ const MainTab = () => {
               tintColor={color}
             />
           ),
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'Cá nhân',
           headerShown: false
         }}
       />

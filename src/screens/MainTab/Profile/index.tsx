@@ -10,13 +10,19 @@ import {
   IResUserRegister,
   IUserRegister,
 } from '../../../redux/authRegisterSlice';
-
+import { RouteProp, useRoute } from '@react-navigation/core';
+import { MainTabParamList } from '../../../nav/MainTab';
 const Profile = () => {
+  
   const token = useSelector<RootState, string>(state => state.auth.accessToken);
   const registerToken = useSelector<RootState, string>(state => state.register.accessToken)
   const [user, setUsers] = React.useState<IUser | IUserRegister>();
+  const [loading,setLoading] = React.useState<boolean>(false)
+  const route = useRoute<RouteProp<MainTabParamList>>()
+  console.log(route.name,route.key)
 
   React.useEffect(() => {
+    let Timer1 = setTimeout(() =>setLoading(true),3000)
     fetch(URL.ValidateToken, {
       method: 'GET',
       headers: {
@@ -31,7 +37,8 @@ const Profile = () => {
         setUsers(json.user);
         // console.log(user,'user');
         // dispatch(users)
-        return;
+        setLoading(false)
+        return clearTimeout(Timer1)
       })
       .catch(error => {
         console.error(error);

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
+
 import { Colors } from "react-native-ui-lib";
 
 const  ShowModal= () => {
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
    
   },
   modalView: {
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     borderRadius: 20,
     padding: 60,
     alignItems: "center",
@@ -60,13 +61,14 @@ const styles = StyleSheet.create({
   },
   button: {
     padding: 10,
-    elevation: 2
+    elevation: 2,
+    width:'100%'
   },
   buttonOpen: {
     backgroundColor: Colors.primary,
   },
   buttonClose: {
-    backgroundColor: "#2196F3",
+    backgroundColor:Colors.primary,
   },
   textStyle: {
     color: "white",

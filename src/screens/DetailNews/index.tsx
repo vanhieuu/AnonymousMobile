@@ -1,4 +1,4 @@
-import {RouteProp, useRoute} from '@react-navigation/core';
+import {NavigationProp, RouteProp, useNavigation, useRoute} from '@react-navigation/core';
 import React from 'react';
 import {
   Platform,
@@ -8,9 +8,10 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import {RootStackParamList} from '../../nav/RootStack';
-import {Colors, Text, View} from 'react-native-ui-lib';
+import { Text, View} from 'react-native-ui-lib';
 import {Header} from 'react-native-elements';
 import RenderHTML from 'react-native-render-html';
+
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -18,8 +19,11 @@ if (Platform.OS === 'android') {
   }
 }
 const DetailNews = () => {
+  const {goBack} = useNavigation()
+
   const {width} = useWindowDimensions();
   const route = useRoute<RouteProp<RootStackParamList, 'DetailNews'>>();
+  console.log(route.name)
   const detailNews = route.params?.item;
   const source = {
     html: `
@@ -35,7 +39,7 @@ const DetailNews = () => {
         }}
         barStyle="light-content"
         statusBarProps={{barStyle: 'light-content'}}
-        leftComponent={{icon: 'back', color: Colors.bgApp}}
+        leftComponent={{icon: 'back', onPress: () => goBack()}}
       />
       <View>
         <View style={{justifyContent: 'space-between', left: 1, padding: 20}}>

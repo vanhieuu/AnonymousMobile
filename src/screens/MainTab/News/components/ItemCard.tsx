@@ -1,4 +1,4 @@
-import {NavigationProp, useNavigation} from '@react-navigation/core';
+import {NavigationProp, RouteProp, useNavigation, useRoute} from '@react-navigation/core';
 import React from 'react';
 import {
   Dimensions,
@@ -15,6 +15,8 @@ const widthScreen = Dimensions.get('window').width;
 const ItemCard = ({item}: {item: INewsData}) => {
   const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
   const {width} = useWindowDimensions();
+  const route = useRoute<RouteProp<RootStackParamList>>()
+  console.log(route.name,route.key)
   const onPressItem = React.useCallback(() => {
     navigate('DetailNews', {
       item,

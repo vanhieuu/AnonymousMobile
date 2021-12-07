@@ -1,6 +1,9 @@
+import { RouteProp, useRoute } from '@react-navigation/core';
 import React from 'react';
 import {Dimensions, Platform, StyleSheet, UIManager} from 'react-native';
 import {View, Image} from 'react-native-ui-lib';
+import { MainTabParamList } from '../../../nav/MainTab';
+
 import Banner from './components/Banner';
 import ListHorizontal from './components/ListHorizontal';
 import ListProduct from './components/ListProduct';
@@ -13,6 +16,8 @@ if (Platform.OS === 'android') {
   }
 }
 const Home = () => {
+  const route = useRoute<RouteProp<MainTabParamList>>()
+  console.log(route.name,route.key)
   return (
     <View flex bg-white marginT-16>
       <Image
@@ -30,8 +35,6 @@ const Home = () => {
           </>
         }
       />
-
-      <View></View>
     </View>
   );
 };

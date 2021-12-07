@@ -142,7 +142,7 @@ const SignIn = () => {
         <View row>
           <Text b13 black center>
             {' '}
-            Bạn không có tài khoản ? 
+            Bạn không có tài khoản ?  
           </Text>
           <Text
             b13
@@ -151,7 +151,7 @@ const SignIn = () => {
             onPress={() => {
               navigate('SignUp');
             }}>
-           Đăng kí ngay 
+            {' '} Đăng kí ngay 
           </Text>
         </View>
       </View>
@@ -174,8 +174,10 @@ const styles = StyleSheet.create({
     // backgroundColor:Colors.primary
   },
   textTitle: {
-    fontFamily: FONTS.Heavy,
-    fontSize: 40,
+    fontFamily: 'lucida grande',
+    fontSize: 20,
+    justifyContent: 'center',
+    textAlign: 'center',
   },
   errorTextStyle: {
     color: 'red',
