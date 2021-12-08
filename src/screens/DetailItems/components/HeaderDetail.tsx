@@ -4,7 +4,8 @@ import {View, TouchableOpacity} from 'react-native';
 import {getStatusBarHeight} from 'react-native-iphone-x-helper';
 import * as Icon from 'react-native-iconly';
 import {Colors, Text} from 'react-native-ui-lib';
-import {useNavigation} from '@react-navigation/core';
+import {NavigationProp, useNavigation} from '@react-navigation/core';
+import { MainTabParamList } from '../../../nav/MainTab';
 
 interface Props {
   scrollY: Animated.Value;
@@ -17,7 +18,7 @@ const HeaderDetail = ({scrollY, title}: Props) => {
     outputRange: [0, 1],
   });
 
-  const {goBack} = useNavigation();
+  const {navigate} = useNavigation<NavigationProp<MainTabParamList>>();
 
   return (
     <View
@@ -33,8 +34,8 @@ const HeaderDetail = ({scrollY, title}: Props) => {
         style={{
           marginLeft: 12,
         }}
-        onPress={goBack}>
-        <Icon.ArrowLeft size={32} color="#000" />
+        onPress={()=>navigate('Home')}>
+        <Icon.ArrowLeft size={20} color="#000" />
       </TouchableOpacity>
       <Animated.View
         style={{

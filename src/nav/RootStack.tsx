@@ -1,10 +1,7 @@
 import React from 'react';
 import {Alert} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {
-  NavigationContainer,
-
-} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import OnboardingScreen from '../screens/Onboarding';
 import SignUp from '../screens/SignUp';
 import MainTab from './MainTab';
@@ -25,7 +22,7 @@ import DetailNews from '../screens/DetailNews';
 import SignIn from '../screens/SignIn';
 import URL from '../config/Api';
 import Search from '../screens/Search';
-import { View } from 'react-native-ui-lib';
+import {View} from 'react-native-ui-lib';
 export type RootStackParamList = {
   Onboarding: undefined;
   SignIn: undefined;
@@ -43,7 +40,6 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const RootStack = () => {
-  
   const statusAuth = useSelector<RootState, EStatusAuth>(
     state => state.auth.statusAuth,
   );
@@ -55,7 +51,7 @@ const RootStack = () => {
   const dispatch = useDispatch();
   const checkLogin = React.useCallback(async () => {
     const auth: IAuth | null = await getAuthAsync();
-   
+
     if (auth) {
       fetch(URL.ValidateToken, {
         method: 'GET',
@@ -115,24 +111,18 @@ const RootStack = () => {
             headerShown: true,
           }}
         />
-
         <Stack.Screen
-          name="MainTab"
-          component={MainTab}
-          options={{headerShown: false}}
+          name="DetailItems"
+          component={DetailItems}
+          options={{
+            headerShown: false,
+          }}
         />
 
         <Stack.Screen
           name="Search"
           component={Search}
           options={{headerShown: true}}
-        />
-        <Stack.Screen
-          name="DetailItems"
-          component={DetailItems}
-          options={{
-            headerShown: true,
-          }}
         />
 
         <Stack.Screen
@@ -142,9 +132,13 @@ const RootStack = () => {
             headerShown: true,
           }}
         />
+        <Stack.Screen
+          name="MainTab"
+          component={MainTab}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
-    
   );
 };
 

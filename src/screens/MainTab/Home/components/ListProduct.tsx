@@ -1,12 +1,8 @@
-import {RouteProp, useRoute} from '@react-navigation/core';
 import React from 'react';
 import {FlatList, LayoutAnimation, StyleSheet} from 'react-native';
-import { View } from 'react-native-ui-lib';
 
 import {useSelector} from 'react-redux';
 import URL from '../../../../config/Api';
-import {RootStackParamList} from '../../../../nav/RootStack';
-import {IUser} from '../../../../redux/authSlice';
 
 import {RootState} from '../../../../redux/store';
 import {IProduct} from '../../../../types/IProduct';
@@ -20,7 +16,7 @@ interface Props {
     | undefined;
 }
 
-const ListProduct = ({ListHeaderComponent}:Props) => {
+const ListProduct = ({ListHeaderComponent}: Props) => {
   // const token = useSelector<RootState, string>(state => state.auth.accessToken);
   const productID = useSelector<RootState, string>(
     state => state.product.productId,
@@ -31,7 +27,6 @@ const ListProduct = ({ListHeaderComponent}:Props) => {
   const token = useSelector<RootState, string>(state => state.auth.accessToken);
 
   React.useEffect(() => {
-  
     fetch(URL.Products, {
       method: 'GET',
       headers: {
