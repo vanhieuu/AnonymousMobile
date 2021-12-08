@@ -43,7 +43,7 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const RootStack = () => {
-  const [didMount, setDidMount] = React.useState<boolean>(false);
+  
   const statusAuth = useSelector<RootState, EStatusAuth>(
     state => state.auth.statusAuth,
   );
@@ -55,7 +55,7 @@ const RootStack = () => {
   const dispatch = useDispatch();
   const checkLogin = React.useCallback(async () => {
     const auth: IAuth | null = await getAuthAsync();
-    console.log(getAuthAsync());
+   
     if (auth) {
       fetch(URL.ValidateToken, {
         method: 'GET',
@@ -95,9 +95,8 @@ const RootStack = () => {
   // }
 
   return (
-    <View>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SignIn">
+      <Stack.Navigator initialRouteName="Onboarding">
         <Stack.Screen
           name="SignIn"
           component={SignIn}
@@ -145,7 +144,7 @@ const RootStack = () => {
         />
       </Stack.Navigator>
     </NavigationContainer>
-    </View>
+    
   );
 };
 

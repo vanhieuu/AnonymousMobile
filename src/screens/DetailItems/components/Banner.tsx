@@ -3,6 +3,9 @@ import React from 'react';
 import {Dimensions, Platform, StyleSheet, UIManager} from 'react-native';
 import {View, Image, Carousel, Colors} from 'react-native-ui-lib';
 import {RootStackParamList} from '../../../nav/RootStack';
+
+
+
 const widthScreen = Dimensions.get('window').width;
 const widthCarousel = widthScreen - 32;
 const heightCarousel = (widthCarousel / 344) * 242;

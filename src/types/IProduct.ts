@@ -17,8 +17,11 @@ export interface IProduct {
   updated_at: string;
   deleted_at: string;
   quantity:number;
+  img:string;
   tags: [];
   description:[]
+  sold:number;
+  vote:number;
 
 }
 export interface IResNews {
@@ -27,7 +30,5 @@ export interface IResNews {
   data:INewsData[]
 }
 export interface IResProduct{
-  success:boolean;
-  message: string;
   data:IProduct[]
 }

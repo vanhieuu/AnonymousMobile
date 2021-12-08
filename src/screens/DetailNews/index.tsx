@@ -19,7 +19,7 @@ if (Platform.OS === 'android') {
   }
 }
 const DetailNews = () => {
-  const {goBack} = useNavigation()
+  const {goBack} = useNavigation<NavigationProp<ReactNavigation.RootParamList>>()
 
   const {width} = useWindowDimensions();
   const route = useRoute<RouteProp<RootStackParamList, 'DetailNews'>>();

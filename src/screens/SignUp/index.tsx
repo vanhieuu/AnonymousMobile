@@ -1,8 +1,8 @@
 import {
   NavigationProp,
-  RouteProp,
+
   useNavigation,
-  useRoute,
+
 } from '@react-navigation/core';
 import React, {useState} from 'react';
 import {StyleSheet, ScrollView, Alert, TouchableOpacity} from 'react-native';
@@ -18,7 +18,7 @@ import {
 } from '../../redux/authRegisterSlice';
 import URL from '../../config/Api';
 import {useDispatch} from 'react-redux';
-import {MainTabParamList} from '../../nav/MainTab';
+
 
 const SignUp = () => {
   const [isFocus, setIsFocus] = React.useState<boolean>(false);
@@ -33,14 +33,13 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [errorText, setErrorText] = useState('');
   const [isRegistrationSuccess, setIsRegistrationSuccess] = useState(false);
-  const route = useRoute<RouteProp<MainTabParamList>>();
-  const routeKey = route.key;
+
   const emailInputRef = React.useRef();
   const passwordInputRef = React.useRef();
 
-  // const {goBack} = useNavigation();
-  const {navigate} = useNavigation<NavigationProp<MainTabParamList>>();
-  const navigation = useNavigation();
+ 
+  const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
+  
   const handleSubmitButton = React.useCallback(()=>{
     setErrorText('');
     if (!username) {
@@ -106,7 +105,7 @@ const SignUp = () => {
         <TouchableOpacity
           style={styles.btnLogin}
           activeOpacity={0.5}
-          onPress={() => navigate('Home')}>
+          onPress={() => navigate('MainTab')}>
           <Text style={styles.btnLogin}>Go Home</Text>
         </TouchableOpacity>
       </View>
@@ -230,7 +229,7 @@ const SignUp = () => {
             style={{color: Colors.primary}}
             centerH
             center
-            onPress={() => navigation.goBack()}>
+            onPress={() => navigate('SignIn')}>
             Đăng nhập ngay
           </Text>
         </View>

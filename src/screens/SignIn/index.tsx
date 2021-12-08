@@ -11,7 +11,7 @@ import {MainTabParamList} from '../../nav/MainTab';
 import {RootStackParamList} from '../../nav/RootStack';
 
 const SignIn = () => {
-  const {navigate} = useNavigation<NavigationProp<MainTabParamList>>();
+  
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [isFocus, setIsFocus] = React.useState<boolean>(false);
   const onFocusChange = React.useCallback(() => {
@@ -20,12 +20,12 @@ const SignIn = () => {
   const dispatch = useDispatch();
 
 
-  
+
   const [username, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [loading, setLoading] = React.useState<boolean>(false);
   const [errorText, setErrorText] = React.useState('');
-  const onPressLogin = React.useCallback(()=> {
+  const onPressLogin = async ()=> {
     setErrorText('');
     if (!username) {
       Alert.alert('Tên đăng nhập không được để trống');
@@ -38,7 +38,7 @@ const SignIn = () => {
     setLoading(true);
     let dataToSend = {username: username, password: password};
 
-       fetch(URL.Login, {
+       await fetch(URL.Login, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -59,12 +59,12 @@ const SignIn = () => {
         dispatch(onLogin(json));
         setLoading(false);
         saveAuthAsync(json);
-        navigate('Home');
+        navigation.navigate('MainTab');
       })
       .catch(error => {
         console.error(error);
       });
-  },[]);
+  };
 
   return (
     <ScrollView style={{backgroundColor: 'white', marginTop: 50}}>

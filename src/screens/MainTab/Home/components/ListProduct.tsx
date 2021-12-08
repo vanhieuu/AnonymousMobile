@@ -1,6 +1,7 @@
 import {RouteProp, useRoute} from '@react-navigation/core';
 import React from 'react';
 import {FlatList, LayoutAnimation, StyleSheet} from 'react-native';
+import { View } from 'react-native-ui-lib';
 
 import {useSelector} from 'react-redux';
 import URL from '../../../../config/Api';
@@ -19,7 +20,7 @@ interface Props {
     | undefined;
 }
 
-const ListProduct = ({ListHeaderComponent}: Props) => {
+const ListProduct = ({ListHeaderComponent}:Props) => {
   // const token = useSelector<RootState, string>(state => state.auth.accessToken);
   const productID = useSelector<RootState, string>(
     state => state.product.productId,
@@ -30,9 +31,8 @@ const ListProduct = ({ListHeaderComponent}: Props) => {
   const token = useSelector<RootState, string>(state => state.auth.accessToken);
 
   React.useEffect(() => {
-    if (!token || !productID) return;
-    setLoading(true);
-    fetch(URL.item(productID), {
+  
+    fetch(URL.Products, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -54,12 +54,15 @@ const ListProduct = ({ListHeaderComponent}: Props) => {
 
   return (
     <FlatList
+      style={{alignContent: 'space-between'}}
       data={product}
       numColumns={2}
+      key={2}
       renderItem={({item}) => {
         return <ItemProduct item={item} />;
       }}
       keyExtractor={(item, index) => item._id.toString()}
+      ListHeaderComponent={ListHeaderComponent}
     />
   );
 };

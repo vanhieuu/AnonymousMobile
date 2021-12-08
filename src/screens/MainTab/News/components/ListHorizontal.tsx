@@ -8,10 +8,12 @@ import {
   UIManager,
 } from 'react-native';
 import {View, Text, Colors} from 'react-native-ui-lib';
+import { useSelector } from 'react-redux';
 
 import URL from '../../../../config/Api';
 
 import {INewsData} from '../../../../redux/newSlice';
+import { RootState } from '../../../../redux/store';
 
 import ItemCard from './ItemCard';
 
@@ -23,38 +25,39 @@ if (Platform.OS === 'android') {
 
 const ListHorizontal = () => {
   const [news, setNews] = React.useState<INewsData[]>([]);
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
   const [pageNumber, setPageNumber] = React.useState(1);
+  const token = useSelector<RootState, string>(state => state.auth.accessToken);
   const onEndReached = React.useCallback(() => {
     setPageNumber(pageNumber + 1);
   }, [pageNumber]);
 
-    const loadingNews = React.useCallback(async() =>{
-      
-       await fetch(URL.News(pageNumber), {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      })
-        .then(response => response.json())
-        .then(json => {
-          LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-          setNews([...news, ...json.data]);
-          setLoading(false);
-          // console.log(json.news);
+  const loadingNews = React.useCallback(async () => {
   
-          return json;
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    },[pageNumber] )
+    await fetch(URL.News(pageNumber), {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(response => response.json())
+      .then(json => {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+        setNews([...news, ...json.data]);
+        setLoading(false);
+        // console.log(json.news);
 
-  
+        return json;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, [pageNumber]);
+
   React.useEffect(() => {
-      loadingNews();
+    loadingNews();
   }, []);
 
   const RenderLoader = () => {

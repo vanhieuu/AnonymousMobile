@@ -6,7 +6,7 @@ import {RootStackParamList} from '../../nav/RootStack';
 import {Text, View, Colors, Assets, Image, Avatar} from 'react-native-ui-lib';
 import * as Icon from 'react-native-iconly';
 import dayjs from 'dayjs';
-const scrollY = React.useRef(new Animated.Value(0)).current;
+
 const widthBanner = Dimensions.get('window').width;
 const heightBanner = (widthBanner / 1600) * 1000;
 
@@ -14,7 +14,7 @@ const DetailItems = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'DetailItems'>>();
   const product = route.params.item;
   const imgBack = product.listphotos;
-
+  const scrollY = React.useRef(new Animated.Value(0)).current;
   return (
     <Animated.ScrollView
       onScroll={Animated.event(
@@ -39,17 +39,17 @@ const DetailItems = () => {
           height: heightBanner,
           width: widthBanner,
         }}>
-        <Image
-          // source={{
-          //   uri: product.listphotos.find(element => element !== undefined),
-          // }}
-          source={imgBack[product.quantity % 10]}
-          style={{
-            height: heightBanner,
-            width: widthBanner,
-          }}
-          overlayType={Image.overlayTypes.BOTTOM}
-        />
+        {product.listphotos.map((img, index) => {
+          <Image
+            key={index}
+            source={{uri: img}}
+            style={{
+              height: heightBanner,
+              width: widthBanner,
+            }}
+            overlayType={Image.overlayTypes.BOTTOM}
+          />;
+        })}
       </View>
 
       <Text h28 marginH-16 marginV-12>
