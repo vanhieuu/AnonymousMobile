@@ -30,6 +30,7 @@ const ListHorizontal = () => {
   }, [pageNumber]);
 
     const loadingNews = React.useCallback(async() =>{
+      
        await fetch(URL.News(pageNumber), {
         method: 'GET',
         headers: {

@@ -1,10 +1,11 @@
-import { RouteProp, useRoute } from '@react-navigation/core';
+import {RouteProp, useRoute} from '@react-navigation/core';
 import React from 'react';
 import {FlatList, LayoutAnimation, StyleSheet} from 'react-native';
 
 import {useSelector} from 'react-redux';
 import URL from '../../../../config/Api';
-import { RootStackParamList } from '../../../../nav/RootStack';
+import {RootStackParamList} from '../../../../nav/RootStack';
+import {IUser} from '../../../../redux/authSlice';
 
 import {RootState} from '../../../../redux/store';
 import {IProduct} from '../../../../types/IProduct';
@@ -23,14 +24,15 @@ const ListProduct = ({ListHeaderComponent}: Props) => {
   const productID = useSelector<RootState, string>(
     state => state.product.productId,
   );
-  const route = useRoute<RouteProp<RootStackParamList,'DetailItems'>>()
-  console.log(route.name,route.key)
+
   const [loading, setLoading] = React.useState(false);
   const [product, setProduct] = React.useState<IProduct[]>();
   const token = useSelector<RootState, string>(state => state.auth.accessToken);
-  const loadingProduct = React.useCallback(async() =>{
+
+  React.useEffect(() => {
+    if (!token || !productID) return;
     setLoading(true);
-    await fetch(URL.item(productID), {
+    fetch(URL.item(productID), {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -48,12 +50,8 @@ const ListProduct = ({ListHeaderComponent}: Props) => {
       .catch(error => {
         console.error(error);
       });
-  },[])
-  React.useEffect(() => {
-    loadingProduct();
   }, []);
 
-  
   return (
     <FlatList
       data={product}
@@ -62,7 +60,6 @@ const ListProduct = ({ListHeaderComponent}: Props) => {
         return <ItemProduct item={item} />;
       }}
       keyExtractor={(item, index) => item._id.toString()}
-      
     />
   );
 };

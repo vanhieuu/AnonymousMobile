@@ -3,7 +3,7 @@ import {Alert} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
   NavigationContainer,
-  useNavigationContainerRef,
+
 } from '@react-navigation/native';
 import OnboardingScreen from '../screens/Onboarding';
 import SignUp from '../screens/SignUp';
@@ -25,6 +25,7 @@ import DetailNews from '../screens/DetailNews';
 import SignIn from '../screens/SignIn';
 import URL from '../config/Api';
 import Search from '../screens/Search';
+import { View } from 'react-native-ui-lib';
 export type RootStackParamList = {
   Onboarding: undefined;
   SignIn: undefined;
@@ -94,6 +95,7 @@ const RootStack = () => {
   // }
 
   return (
+    <View>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="SignIn">
         <Stack.Screen
@@ -143,6 +145,7 @@ const RootStack = () => {
         />
       </Stack.Navigator>
     </NavigationContainer>
+    </View>
   );
 };
 

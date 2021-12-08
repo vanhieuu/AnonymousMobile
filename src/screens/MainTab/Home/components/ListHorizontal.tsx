@@ -1,4 +1,4 @@
-import { RouteProp, useRoute } from '@react-navigation/core';
+import {RouteProp, useRoute} from '@react-navigation/core';
 import React from 'react';
 import {
   FlatList,
@@ -8,11 +8,10 @@ import {
   UIManager,
 } from 'react-native';
 import {Colors, Card, Text, View} from 'react-native-ui-lib';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import URL from '../../../../config/Api';
-import { RootStackParamList } from '../../../../nav/RootStack';
-import { RootState } from '../../../../redux/store';
-
+import {RootStackParamList} from '../../../../nav/RootStack';
+import {RootState} from '../../../../redux/store';
 
 import {IProduct} from '../../../../types/IProduct';
 
@@ -46,10 +45,10 @@ const ListHorizontal = () => {
   const [products, setProducts] = React.useState<IProduct[]>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const token = useSelector<RootState, string>(state => state.auth.accessToken);
-  const [didMount,setDidMount] = React.useState<boolean>(false)
-  const loadProduct = async () =>{
-    setLoading(true)
-   await fetch(URL.Products, {
+  const [didMount, setDidMount] = React.useState<boolean>(false);
+  React.useEffect(() => {
+    setLoading(true);
+    fetch(URL.Products, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -67,13 +66,6 @@ const ListHorizontal = () => {
       .catch(err => {
         console.error(err);
       });
-  }
-  
-  
-  React.useEffect(() => {
-    setDidMount(true)
-   loadProduct()
-   setDidMount(false)
   }, []);
 
   return (
@@ -110,8 +102,8 @@ const ListHorizontal = () => {
           horizontal
           showsHorizontalScrollIndicator={true}
           data={products}
-          keyExtractor={item => item.name.toString()}
-          contentContainerStyle={{paddingHorizontal: 30, paddingVertical: 30}}
+          keyExtractor={item => item._id.toString()}
+          contentContainerStyle={{paddingHorizontal: 16, paddingVertical: 312}}
           renderItem={({item}) => {
             return <ItemList item={item} />;
           }}
