@@ -1,6 +1,6 @@
 import React from 'react';
 import {Dimensions, Platform, StyleSheet, UIManager} from 'react-native';
-import {View, Image} from 'react-native-ui-lib';
+import {View, Image,Colors} from 'react-native-ui-lib';
 
 import Banner from './components/Banner';
 import ListHorizontal from './components/ListHorizontal';
@@ -12,7 +12,7 @@ const heightImg = (widthImg / 375) * 256;
 
 const Home = () => {
   return (
-    <View flex bg-white>
+    <View flex backgroundColor={Colors.primary}>
       <Image
         assetGroup="imgNewScreen"
         assetName="ic_bg"

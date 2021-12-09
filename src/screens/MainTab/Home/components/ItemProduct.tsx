@@ -1,14 +1,13 @@
 import {NavigationProp, useNavigation} from '@react-navigation/core';
 import React from 'react';
 import {Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
-import {View, Card, Text, Image} from 'react-native-ui-lib';
-import { numberFormat } from '../../../../config/formatCurrency';
+import {View, Card, Text, Image,Colors} from 'react-native-ui-lib';
+
+import {numberFormat} from '../../../../config/formatCurrency';
 import {RootStackParamList} from '../../../../nav/RootStack';
 import {IProduct} from '../../../../types/IProduct';
 
 const widthScreen = Dimensions.get('window').width;
-
-
 
 const ItemProduct = ({item}: {item: IProduct}) => {
   const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
@@ -19,10 +18,13 @@ const ItemProduct = ({item}: {item: IProduct}) => {
   }, []);
   return (
     <View
-      backgroundColor="#Fff"
+      backgroundColor='#fff'
       style={{justifyContent: 'space-between'}}
       marginH-12
-      marginR-4>
+      marginR-3
+      
+      >
+
       <TouchableOpacity onPress={onPressItem}>
         <Card style={styles.container}>
           <View style={styles.contentItem}>
@@ -30,9 +32,7 @@ const ItemProduct = ({item}: {item: IProduct}) => {
               style={{
                 height: 100,
                 width: 150,
-                justifyContent: 'center',
                 alignSelf: 'center',
-                marginRight: 15,
               }}
               source={{
                 uri: item.listphotos.find(element => element !== undefined),
@@ -42,15 +42,11 @@ const ItemProduct = ({item}: {item: IProduct}) => {
           </View>
           <View>
             <View>
-              <View marginB-8 marginH-20>
-                <Text m13 marginT-10 numberOfLines={2} color={'#6f6f6f'}>
+              <View paddingL-5 paddingR-20 marginB-11>
+                <Text m17 marginT-10 numberOfLines={2} color={'#6f6f6f'}>
                   {item.name}
                 </Text>
                 <Text b13 color={'#7e7d7d'}>
-                  {/* {item.listedPrice.toLocaleString('vi-VN', {
-                    style: 'currency',
-                    currency: 'VND',
-                  })} */}
                   {numberFormat.format(item.listedPrice)}
                 </Text>
               </View>
@@ -69,10 +65,10 @@ const styles = StyleSheet.create({
     width: widthScreen - 210,
     height: widthScreen - 210,
     backgroundColor: '#fff',
-    alignSelf: 'center',
     marginBottom: 12,
-    flexDirection: 'column',
-    justifyContent: 'space-around',
+    alignItems:'center'
+    
+    
   },
   contentItem: {
     borderTopLeftRadius: 12,
@@ -80,9 +76,9 @@ const styles = StyleSheet.create({
     height: 100,
     width: 200,
   },
-  imgStyle: {
-    height: 150,
-    width: 150,
-    justifyContent: 'center',
-  },
+  // imgStyle: {
+  //   height: 150,
+  //   width: 150,
+  //   justifyContent: 'center',
+  // },
 });

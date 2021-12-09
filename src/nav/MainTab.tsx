@@ -33,7 +33,9 @@ const MainTab = () => {
         component={Home}
         options={{
           tabBarIcon: ({color}) => (
-            <Image assetGroup="iconTab" assetName="ic_home" tintColor={color} />
+            <Image assetGroup="iconTab" assetName="ic_home" tintColor={color}
+            
+            />
           ),
           tabBarLabel: 'Trang chủ',
           headerTransparent: true,
@@ -96,7 +98,7 @@ const MainTab = () => {
             />
           ),
           tabBarLabel: 'Giỏ hàng',
-          headerShown: true,
+          headerShown: false,
           tabBarBadge: 1
         }}
       />

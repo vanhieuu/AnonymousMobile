@@ -22,7 +22,7 @@ import DetailNews from '../screens/DetailNews';
 import SignIn from '../screens/SignIn';
 import URL from '../config/Api';
 import Search from '../screens/Search';
-import {View} from 'react-native-ui-lib';
+
 export type RootStackParamList = {
   Onboarding: undefined;
   SignIn: undefined;

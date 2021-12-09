@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Animated, Easing} from 'react-native';
+import {StyleSheet, Animated} from 'react-native';
 import {View, TouchableOpacity} from 'react-native';
 import {getStatusBarHeight} from 'react-native-iphone-x-helper';
 import * as Icon from 'react-native-iconly';
